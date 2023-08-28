@@ -1,7 +1,9 @@
 import fontSizes from "./fontSizes";
 import color from "./color";
+import url from "./url";
 
-export default {
+export {
     fontSizes,
-    color
+    color,
+    url
 }

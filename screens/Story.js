@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Text, TextInput, View, StyleSheet, FlatList, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5'
-import fontSizes from '../constants/fontSizes';
+import { fontSizes, url } from '../constants'
 
 function Story({navigation}) {
 
@@ -14,7 +14,7 @@ function Story({navigation}) {
     const getStories = async () => {
         try {
           const baererToken = 'WNrSblksezNAhyFrCjOcG2CwAyjU4cxzxPFcVHpj';
-          const response = await axios.get('https://46c4-42-113-128-37.ngrok-free.app/api/allData', {
+          const response = await axios.get(url.getAllData, {
             headers: {
               Authorization: `Bearer ${baererToken}`,
             },
