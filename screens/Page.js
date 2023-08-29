@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Text, TextInput, View, StyleSheet, FlatList, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Video } from 'react-native-video';
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import fontSizes from '../constants/fontSizes';
 
@@ -62,32 +63,33 @@ function Page(props) {
             }
         ]
     );
-        
+
     return (
         <View style={styles.container}>
 
             <View  >
                 <FlatList
                     data={page}
-                    renderItem={({item})=> 
-                            <View style={styles.page}>
-                                <FlatList
-                                    data={item.has_text_config}
-                                    renderItem={({item}) =>
-                                        <View style={styles.pageText}>
-                                            <Text style={styles.text}>{item.belong_text.text}</Text>
-                                        </View>
-                                    }
-                                />
-                                <Image
-                                    style={styles.background}
-                                    source={{
-                                        uri:item.background
-                                    }}
-                                />
-                                
-                            </View>
-                        
+                    renderItem={({ item }) =>
+                        <View style={styles.page}>
+                            <FlatList
+                                data={item.has_text_config}
+                                renderItem={({ item }) =>
+                                    <View style={styles.pageText}>
+                                        <Text style={styles.text}>{item.belong_text.text}</Text>
+                                    </View>
+                                }
+                            />
+                            <Image
+                                style={styles.background}
+                                source={{
+                                    uri: item.background
+                                }}
+                            />
+                            {/* <Video source={ require('../asserts/audio/boiling water.mp3')} 
+                                style={styles.backgroundVideo} /> */}
+                        </View>
+
                     }
                 />
             </View>
@@ -99,32 +101,40 @@ const styles = StyleSheet.create(
     {
         container: {
             backgroundColor: 'white',
-            flex:1
+            flex: 1
         },
         page: {
-            height:300,
-            backgroundColor:'white', 
-            margin:20,
+            height: 300,
+            backgroundColor: 'white',
+            margin: 20,
             borderColor: 'black',
             borderWidth: 2,
             borderRadius: 10,
-            justifyContent:'center'
+            justifyContent: 'center'
         },
         pageText: {
-            height:50, 
-            justifyContent:'center',
-            alignItems:'center',
-            marginVertical:10,
-            marginHorizontal:5
+            height: 50,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginVertical: 10,
+            marginHorizontal: 5
         },
         text: {
             fontSize: fontSizes.h1,
-            color:'black'
+            color: 'black'
         },
         background: {
             height: 180,
-            resizeMode:'stretch'
-        }
+            resizeMode: 'stretch'
+        },
+        backgroundVideo: {
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            width: 300, height: 200
+          },
     }
 )
 

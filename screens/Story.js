@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Text, TextInput, View, StyleSheet, FlatList, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { fontSizes, url } from '../constants'
 
 function Story({navigation}) {
@@ -11,9 +12,20 @@ function Story({navigation}) {
     const [isLoading, setLoading] = useState(true);
     const [story, setStory] = useState([]);
 
+    const getToken = async () => {
+        try {
+            const token = await AsyncStorage.getItem('token');
+            console.log('Token:', token);
+            return token;
+        } catch (error) {
+            console.log('Truy xuất token thất bại:', error);
+            return null;
+        }
+    };
+
     const getStories = async () => {
         try {
-          const baererToken = 'WNrSblksezNAhyFrCjOcG2CwAyjU4cxzxPFcVHpj';
+          const baererToken = await getToken();
           const response = await axios.get(url.getAllData, {
             headers: {
               Authorization: `Bearer ${baererToken}`,
