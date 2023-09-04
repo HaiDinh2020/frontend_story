@@ -67,7 +67,7 @@ function Register({ navigation }) {
             >
 
                 <View style={{
-                    flex: 80,
+                    flex: 60,
                     width: '100%'
                 }}>
                     <View style={{
@@ -131,7 +131,6 @@ function Register({ navigation }) {
                             height: 50,
                             backgroundColor: 'white',
                             justifyContent: 'center',
-                            marginBottom: 5
                         }}
                             secureTextEntry={true}
                             placeholderTextColor='black'
@@ -141,13 +140,12 @@ function Register({ navigation }) {
                             }}
                         />
                         <Text style={{ color: 'red', fontSize: fontSizes.h5 }}>{errorPasswordConfirm}</Text>
-
                     </View>
 
                 </View>
                 {keyboardIsShow == false &&
                     <View style={{
-                        flex: 20,
+                        flex: 40,
                         width: '100%',
                         alignItems: 'center'
                     }}>
@@ -158,7 +156,8 @@ function Register({ navigation }) {
                                 backgroundColor: '#0099FF',
                                 borderRadius: 20,
                                 alignItems: 'center',
-                                justifyContent: 'center'
+                                justifyContent: 'center',
+                                marginBottom: 5
                             }}
                             onPress={() => {
                                 handleRegister();
@@ -166,9 +165,18 @@ function Register({ navigation }) {
                         >
                             <Text style={{
                                 padding: 8,
-                                fontSize: fontSizes.h2
+                                fontSize: fontSizes.h2,
+                                color:'black',
+                                fontWeight: 'bold'
                             }}>Register</Text>
                         </TouchableOpacity>
+
+                        <Text style={{ fontSize: fontSizes.h4}} >
+                            Already have an account?  
+                            <Text style={{color:'black', fontWeight:'bold'}}
+                                onPress={() => navigation.navigate('Login')}
+                            >Login</Text>
+                        </Text>
                     </View>
                 }
             </ImageBackground>

@@ -4,10 +4,12 @@ import { Text, TextInput, View, StyleSheet, FlatList, Image, TouchableOpacity, A
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { fontSizes, url } from '../constants'
-
+// import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { loadStory } from '../actions/actions';
 function Story({navigation}) {
 
-    
+    const dispatch = useDispatch();
 
     const [isLoading, setLoading] = useState(true);
     const [story, setStory] = useState([]);
@@ -32,6 +34,7 @@ function Story({navigation}) {
             },
           });
           setStory(response.data);
+          dispatch(loadStory(response.data))
         } catch (error) {
           console.error(error);
         } finally {

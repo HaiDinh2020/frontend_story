@@ -25,7 +25,7 @@ function Login({ navigation }) {
         password: password
       })
         .then(function (response) {
-          if(response.data.status == 400) {
+          if (response.data.status == 400) {
             setErrorEmail('Email is not correct')
             setErrorPassword('Password is not correct')
           } else {
@@ -38,7 +38,7 @@ function Login({ navigation }) {
           console.log(error);
         });
 
-      
+
     }
   }
 
@@ -146,7 +146,8 @@ function Login({ navigation }) {
                 backgroundColor: '#0099FF',
                 borderRadius: 20,
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                marginBottom: 5
               }}
               onPress={() => {
                 handleLogin();
@@ -157,6 +158,13 @@ function Login({ navigation }) {
                 fontSize: fontSizes.h2
               }}>Login</Text>
             </TouchableOpacity>
+
+            <Text style={{ fontSize: fontSizes.h4 }} >
+              Don't have an account?
+              <Text style={{ color: 'black', fontWeight: 'bold' }}
+                onPress={() => navigation.navigate('Register')}
+              >Register</Text>
+            </Text>
           </View>
         }
       </ImageBackground>
