@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import Sound from 'react-native-sound';
-import {} from '../asserts/audio/bowl.mp3'
 import { fontSizes } from '../constants';
 import { useSelector } from 'react-redux';
 import { url } from '../constants';
@@ -10,9 +9,8 @@ function Audio(props) {
     const [sound, setSound] = useState();
     const story = useSelector((state)=> state.stories)
     // const audio = useSelector((state)=> state.stories.)
-    const audio = '../asserts/audio/bowl.mp3'
     console.warn(4, story);
-    const soundFile = new Sound(url.audio, Sound.MAIN_BUNDLE, (error) => {
+    const soundFile = new Sound('bowl.mp3', Sound.MAIN_BUNDLE, (error) => {
         if (error) {
             console.log('failed to load the sound', error);
             return;

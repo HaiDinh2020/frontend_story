@@ -4,7 +4,7 @@ import Sound from "react-native-sound";
 
 let isTextFinish = true;
 
-const Title = ({ title, touchText, isTouch, page }) => {
+const Title = ({ title, touchText, isTouch, page, orderTitle, handleOrder }) => {
 
     const font = useFont(require("../../asserts/fonts/Nasa21-l23X.ttf"), 32);
 
@@ -29,12 +29,13 @@ const Title = ({ title, touchText, isTouch, page }) => {
     const [color, setColor] = useState([])
     const [index, setIndex] = useState(0);
 
-    // sendData = () => {
-    //     props.parentCallback("Message from Child");
-    // },
+    const sendOrder = () => {
+        handleOrder(orderTitle+1);
+    }
+    
 
     useEffect(() => {
-        // setColor(ArrayColor)
+        
         if ( title.page_id == page+1) {
             const soundTitle = new Sound(`${title.belong_text.has_audio[0].file_path}`, Sound.MAIN_BUNDLE, (error) => {
                 if (error) {
@@ -43,23 +44,25 @@ const Title = ({ title, touchText, isTouch, page }) => {
                 } else {
                     console.log('load sound success')
                     soundTitle.play()
-                    isTextFinish = false
+                    setIndex(0)
                     setColor(ArrayColor)
+                    isTextFinish = false
                 }
             });
 
             return () => {
-                setIndex(0)
                 soundTitle.release();
-                // isTextFinish = true
+                isTextFinish = true
+                setIndex(-1)
                 console.log('release sound')
             }
         }
-    }, [page])
+    }, [page, orderTitle])
 
 
     useEffect(() => {
         if (!isTextFinish) {
+            console.log("index", index, "-", wordList)
             const id = setTimeout(() => {
                 let newColor = ArrayColor;
                 newColor[index] = 'black' ? 'red' : 'black';
@@ -70,6 +73,7 @@ const Title = ({ title, touchText, isTouch, page }) => {
             if (numWord > 0 && index >= numWord + 1) {
                 setIndex(-1)
                 clearTimeout(id)
+                sendOrder();
                 isTextFinish = true;
             } else
                 setIndex(index + 1);
@@ -84,7 +88,6 @@ const Title = ({ title, touchText, isTouch, page }) => {
                     let newColor = ArrayColor;
                     newColor[index] = 'black' ? 'red' : 'black';
                     setColor(newColor);
-                    // console.log("vị trí của text touch", x, " ", index, " ", x[index])
                     setTimeout(() => {
                         newColor[index] = 'black';
                         setColor(newColor)
@@ -107,7 +110,6 @@ const Title = ({ title, touchText, isTouch, page }) => {
                     )
                 })
             }
-            {/* <Text font={font} text={secondsPassed} color={'red'} x={50} y={100} /> */}
         </Group>
 
     )

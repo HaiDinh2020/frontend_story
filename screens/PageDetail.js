@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { Canvas, Circle, Image, vec, Rect, Text, useCanvasRef, useFont, useImage, Skia, Path, Vertices, useTouchHandler, useValue, Group } from "@shopify/react-native-skia";
 import { StyleSheet, View, Dimensions, ScrollView, Text as TextNative } from "react-native";
 import Sound from "react-native-sound";
-import Title from "./handleTitle/Title";
 import Swiper from "react-native-swiper";
+import { handleMultiTitle } from "../actions/actions";
+import MultiTitle from "./handleTitle/MultiTitle";
 
 
 // Enable playback in silence mode
@@ -13,9 +14,9 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 let isSoundPlay = true;
+let setLengthTitleInRedux = true;
 
 function Pages({ page, currentPage }) {
-
 
     const font = useFont(require("../asserts/fonts/Nasa21-l23X.ttf"), 32);
 
@@ -27,7 +28,6 @@ function Pages({ page, currentPage }) {
     const [touchText, setTouchText] = useState("");
 
     const title = page.has_text_config;
-
 
     const [sound, setSound] = useState(null)
 
@@ -88,6 +88,18 @@ function Pages({ page, currentPage }) {
         setIsTouch(false)
     }, 2000)
 
+    
+    useEffect(()=> {
+        if(setLengthTitleInRedux) {
+            setLengthTitleInRedux = true;
+            // console.log(1, title.length, " - ",  currentPage)
+        }
+        
+        return () => {
+            setLengthTitleInRedux = true;
+        }
+       
+    }, [])
 
 
     useEffect(() => {
@@ -97,9 +109,6 @@ function Pages({ page, currentPage }) {
         }
     }, [isTouch])
 
-    const handleBack = useTouchHandler({
-
-    })
 
 
     // vẽ 
@@ -180,15 +189,16 @@ function Pages({ page, currentPage }) {
                 <View style={styles.wrap} >
                     <Canvas style={styles.wrap} onTouch={touchHandler} >
                         <Image image={image1} fit={'fill'} x={0} y={0} width={width} height={height} />
+                        <Group >
+                            <Rect x={0} y={0} width={30} height={40} color={'red'} />
+                            <Rect x={5} y={8} width={20} height={2} color={'blue'} />
+                            <Rect x={5} y={19} width={20} height={2} color={'blue'} />
+                            <Rect x={5} y={29} width={20} height={2} color={'blue'} />
+                        </Group>
                         <Circle cx={cx} cy={cy} r={10} color="red" />
                         {/* {console.log('redner view', currentPage)} */}
-                        {
-                            title.map((item, index) => {
-                                return (
-                                    <Title key={index} title={item} touchText={touchText} isTouch={isTouch} page={currentPage} />
-                                )
-                            })
-                        }
+                        <MultiTitle title={title} touchText={touchText} isTouch={isTouch} page={currentPage}/>
+                        
                         {isTouch &&
                             <Text font={font} text={touchText} color={'blue'} x={touchPosition[0]} y={touchPosition[1]} />
                         }
@@ -198,13 +208,7 @@ function Pages({ page, currentPage }) {
                         color="lightblue"
                     /> */}
                     </Canvas>
-                    <Canvas style={{ width: 30, height: 40, borderWidth: 2, borderColor: 'blue', position: 'absolute', left: 750, top: 0 }} onTouch={handleBack} >
-                        <Group>
-                            <Rect x={5} y={8} width={20} height={2} color={'blue'} />
-                            <Rect x={5} y={19} width={20} height={2} color={'blue'} />
-                            <Rect x={5} y={29} width={20} height={2} color={'blue'} />
-                        </Group>
-                    </Canvas>
+                    
                 </View>
             {/* </Swiper> */}
 

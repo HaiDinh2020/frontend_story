@@ -1,17 +1,8 @@
-const initialState = {
-    stories: [],
-};
+import { combineReducers } from "redux";
+import storyReducer from "./storyReducer";
 
-const rootReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case 'loadStory':
-            return {
-                ...state,
-                stories: action.payload
-            };
-        default:
-            return state;
-    }
-}
+const rootReducer = combineReducers({
+    stories: storyReducer,
+})
 
 export default rootReducer;
