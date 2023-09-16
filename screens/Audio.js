@@ -4,12 +4,15 @@ import Sound from 'react-native-sound';
 import {} from '../asserts/audio/bowl.mp3'
 import { fontSizes } from '../constants';
 import { useSelector } from 'react-redux';
+import { url } from '../constants';
 
 function Audio(props) {
     const [sound, setSound] = useState();
     const story = useSelector((state)=> state.stories)
-    console.warn(2, story);
-    const soundFile = new Sound(require('../asserts/audio/bowl.mp3'), Sound.MAIN_BUNDLE, (error) => {
+    // const audio = useSelector((state)=> state.stories.)
+    const audio = '../asserts/audio/bowl.mp3'
+    console.warn(4, story);
+    const soundFile = new Sound(url.audio, Sound.MAIN_BUNDLE, (error) => {
         if (error) {
             console.log('failed to load the sound', error);
             return;
@@ -21,13 +24,13 @@ function Audio(props) {
     }
 
     useEffect(() => {
-        // setSound(soundFile);
-        // return () => {
-        //     if (sound) {
-        //       sound.release();
-        //       console.log('sound released')
-        //     }
-        //   };
+        setSound(soundFile);
+        return () => {
+            if (sound) {
+              sound.release();
+              console.log('sound released')
+            }
+          };
     }, [])
     return (
         <View style={styles.container} >

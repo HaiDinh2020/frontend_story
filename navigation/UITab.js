@@ -1,7 +1,7 @@
 import React from "react";
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Story, Audio, Profile } from "../screens";
+import { Story, Audio, Profile, Login } from "../screens";
 
 const screenOptions = ({ route }) => ({
     headerShown: false,

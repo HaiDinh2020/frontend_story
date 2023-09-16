@@ -4,6 +4,7 @@ import Page from "./Page";
 import Profile from "./Profile";
 import Register from "./Register";  
 import Audio from "./Audio";
+import Pages from "./PageDetail";
 
 export {
     Login,
@@ -11,5 +12,6 @@ export {
     Story,
     Page,
     Profile,
-    Audio
+    Audio,
+    Pages
 };

@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider } from 'react-redux';
 import store from './store/store';
 import UITab from './navigation/UITab';
-import { Page, Register } from './screens';
+import { Page, Pages, Register } from './screens';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,18 +15,19 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator >
-          <Stack.Screen options={{ headerShown: false }} name="Home" component={UITab} />
-          <Stack.Screen
-            name="Register"
-            component={Register}
-            options={{ headerShown: false }}
-          />
           <Stack.Screen
             name="Login"
             component={Login}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name="StoryDetail" component={Page} />
+          <Stack.Screen
+            name="Register"
+            component={Register}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen options={{ headerShown: false }} name="Home" component={UITab} />
+          <Stack.Screen options={{ headerShown: false }} name="StoryDetail" component={Page} />
+          <Stack.Screen options={{ headerShown: false }} name="Pages" component={Pages} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

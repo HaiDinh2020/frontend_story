@@ -31,15 +31,15 @@ function Login({ navigation }) {
           } else {
             console.log(response.data.token)
             saveToken(response.data.token)
-            navigation.navigate('Home')
           }
         })
         .catch(function (error) {
           console.log(error);
         });
-
-
-    }
+        
+        
+      }
+      navigation.navigate('StoryDetail')
   }
 
   const saveToken = async (token) => {
