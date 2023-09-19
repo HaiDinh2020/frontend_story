@@ -16,7 +16,7 @@ const height = Dimensions.get('window').height;
 let isSoundPlay = true;
 let setLengthTitleInRedux = true;
 
-function Pages({ page, currentPage }) {
+function PageDetail({ page, currentPage }) {
 
     const font = useFont(require("../asserts/fonts/Nasa21-l23X.ttf"), 32);
 
@@ -88,17 +88,17 @@ function Pages({ page, currentPage }) {
         setIsTouch(false)
     }, 2000)
 
-    
-    useEffect(()=> {
-        if(setLengthTitleInRedux) {
+
+    useEffect(() => {
+        if (setLengthTitleInRedux) {
             setLengthTitleInRedux = true;
             // console.log(1, title.length, " - ",  currentPage)
         }
-        
+
         return () => {
             setLengthTitleInRedux = true;
         }
-       
+
     }, [])
 
 
@@ -177,40 +177,66 @@ function Pages({ page, currentPage }) {
     // })
     // path.close();
 
+    const [isSwiper, setIsSwiper] = useState(false)
 
     return (
         <View style={styles.container}>
-            {/* < Swiper
-                style={styles.wrap}
+            < Swiper
+                // style={styles.wrap}
                 horizontal={false}
-                loop
+                loop={false}
                 // autoplay
-            > */}
-                <View style={styles.wrap} >
-                    <Canvas style={styles.wrap} onTouch={touchHandler} >
-                        <Image image={image1} fit={'fill'} x={0} y={0} width={width} height={height} />
-                        <Group >
-                            <Rect x={0} y={0} width={30} height={40} color={'red'} />
-                            <Rect x={5} y={8} width={20} height={2} color={'blue'} />
-                            <Rect x={5} y={19} width={20} height={2} color={'blue'} />
-                            <Rect x={5} y={29} width={20} height={2} color={'blue'} />
-                        </Group>
-                        <Circle cx={cx} cy={cy} r={10} color="red" />
-                        {/* {console.log('redner view', currentPage)} */}
-                        <MultiTitle title={title} touchText={touchText} isTouch={isTouch} page={currentPage}/>
-                        
-                        {isTouch &&
-                            <Text font={font} text={touchText} color={'blue'} x={touchPosition[0]} y={touchPosition[1]} />
-                        }
+                onIndexChanged={(index) => {
+                    console.log('swiper', isSwiper)
+                    setIsSwiper(!isSwiper)
+                    console.log('isswiper', isSwiper)
+                }}
+            >
 
-                        {/* <Path
+                <Canvas style={styles.wrap} onTouch={touchHandler} >
+                    <Image image={image1} fit={'fill'} x={0} y={0} width={width} height={height} />
+                    <Group >
+                        <Rect x={0} y={0} width={30} height={40} color={'red'} />
+                        <Rect x={5} y={8} width={20} height={2} color={'blue'} />
+                        <Rect x={5} y={19} width={20} height={2} color={'blue'} />
+                        <Rect x={5} y={29} width={20} height={2} color={'blue'} />
+                    </Group>
+                    <Circle cx={cx} cy={cy} r={10} color="red" />
+                    {/* {console.log('redner view', currentPage)} */}
+                    {
+                        !isSwiper && <MultiTitle title={title} touchText={touchText} isTouch={isTouch} page={currentPage} />
+                    }
+
+                    {isTouch &&
+                        <Text font={font} text={touchText} color={'blue'} x={touchPosition[0]} y={touchPosition[1]} />
+                    }
+
+                    {/* <Path
                         path={path}
                         color="lightblue"
                     /> */}
-                    </Canvas>
-                    
-                </View>
-            {/* </Swiper> */}
+                </Canvas>
+
+
+                <Canvas style={styles.wrap} onTouch={touchHandler} >
+                    <Image image={image1} fit={'fill'} x={0} y={0} width={width} height={height} />
+                    <Group >
+                        <Rect x={0} y={0} width={30} height={40} color={'red'} />
+                        <Rect x={5} y={8} width={20} height={2} color={'blue'} />
+                        <Rect x={5} y={19} width={20} height={2} color={'blue'} />
+                        <Rect x={5} y={29} width={20} height={2} color={'blue'} />
+                    </Group>
+                    <Circle cx={cx} cy={cy} r={10} color="red" />
+                    {
+                        isSwiper && <MultiTitle title={title} touchText={touchText} isTouch={isTouch} page={currentPage} />
+                    }
+                    {isTouch &&
+                        <Text font={font} text={touchText} color={'blue'} x={touchPosition[0]} y={touchPosition[1]} />
+                    }
+                </Canvas>
+
+
+            </Swiper>
 
         </View>
     );
@@ -226,4 +252,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Pages;
+export default PageDetail;

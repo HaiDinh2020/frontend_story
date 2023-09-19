@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "183743072470",
+    "project_id": "mystory-d0964",
+    "storage_bucket": "mystory-d0964.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:183743072470:android:894d37ba5af18148742177",
+        "android_client_info": {
+          "package_name": "com.frontend_story"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCO3PMlL48mC8pk5a97JnBkoX_Iyt7a2QQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

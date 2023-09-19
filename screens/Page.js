@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView, Dimensions } from 'react-native';
-import Pages from './PageDetail';
+import PageDetail from './PageDetail';
 
 
 const WIDTH = Dimensions.get('window').width;
@@ -426,11 +426,11 @@ function Page(props) {
                 onScroll={onChange}
                 showsHorizontalScrollIndicator={false}
                 pagingEnabled
-                style={styles.wrap}>
+                style={styles.container}>
                 {page.map((source, index) =>
 
 
-                    <Pages key={index} page={source} currentPage={currentPage} />
+                    <PageDetail key={index} page={source} currentPage={currentPage} />
                 )}
             </ScrollView>
         </View>
