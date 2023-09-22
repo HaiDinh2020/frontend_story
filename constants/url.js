@@ -7,4 +7,5 @@ export default {
     // getStoryById: ngrokUrl + 'api/story/id',
     login: ngrokUrl + 'api/login',
     register: ngrokUrl + 'api/register',
+    getAudio: ngrokUrl + 'api/audios'
 }

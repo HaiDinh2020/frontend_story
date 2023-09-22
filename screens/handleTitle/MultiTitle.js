@@ -21,8 +21,8 @@ function MultiTitle({ title, touchText, isTouch, page, textFinish }) {
     }
 
     useEffect(() => {
-        setOrderTitleDisplay(initOrder)
         setOrderTitle(0);
+        setOrderTitleDisplay(initOrder)
     }, [page])
 
     return (

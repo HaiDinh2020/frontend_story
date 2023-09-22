@@ -15,9 +15,7 @@ function Page(props) {
     const [currentPage, setCurrentPage] = useState(0);
 
     const pageId = props.route.params.pages
-    console.log('page id', pageId)
-    // const page2 = props.route.params.pages
-    // console.log("page server", page2)
+
     const [page, setPage] = useState([])
 
     const getToken = async () => {
