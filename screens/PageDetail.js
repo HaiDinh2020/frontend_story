@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Canvas, Circle, Image, vec, Rect, Text, useCanvasRef, useFont, useImage, Skia, Path, Vertices, useTouchHandler, useValue, Group } from "@shopify/react-native-skia";
-import { StyleSheet, View, Dimensions, ScrollView, Text as TextNative } from "react-native";
+import { StyleSheet, View, Dimensions, ScrollView, Text as TextNative, SafeAreaView } from "react-native";
 import Sound from "react-native-sound";
 import Swiper from "react-native-swiper";
 import { handleMultiTitle } from "../actions/actions";
@@ -10,8 +10,8 @@ import MultiTitle from "./handleTitle/MultiTitle";
 // Enable playback in silence mode
 Sound.setCategory('Playback');
 
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
+const width = Dimensions.get('screen').width;
+const height = Dimensions.get('screen').height;
 
 let isSoundPlay = true;
 let setLengthTitleInRedux = true;
@@ -67,19 +67,22 @@ function PageDetail({ page, currentPage }) {
             cx.current = x;
             cy.current = y;
             touches.map((item, index) => {
-                const object = item.data;
-                const objectText = item.belong_text.text;
-
-                if (isInArea({ x, y }, object)) {
-
-                    setTouchText(objectText);
-                    isSoundPlay = true;
-                    setSound(item.belong_text.has_audio);
-                    setIsTouch(true)
-
-                    setTouchPositon([x, y])
-
+                if(item) {
+                    const object = JSON.parse(item.data);
+                    const objectText = item.belong_text.text;
+    
+                    if (isInArea({ x, y }, object)) {
+    
+                        setTouchText(objectText);
+                        isSoundPlay = true;
+                        setSound(item.belong_text.has_audio.audio);
+                        setIsTouch(true)
+    
+                        setTouchPositon([x, y])
+                        return;
+                    }
                 }
+                
             })
         },
     });
@@ -180,13 +183,14 @@ function PageDetail({ page, currentPage }) {
     const [isSwiper, setIsSwiper] = useState(false)
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             < Swiper
                 // style={styles.wrap}
                 horizontal={false}
                 loop={false}
+                showsButtons={false}
                 // autoplay
-                onIndexChanged={(index) => {
+                onIndexChanged={() => {
                     console.log('swiper', isSwiper)
                     setIsSwiper(!isSwiper)
                     console.log('isswiper', isSwiper)
@@ -196,12 +200,12 @@ function PageDetail({ page, currentPage }) {
                 <Canvas style={styles.wrap} onTouch={touchHandler} >
                     <Image image={image1} fit={'fill'} x={0} y={0} width={width} height={height} />
                     <Group >
-                        <Rect x={0} y={0} width={30} height={40} color={'red'} />
-                        <Rect x={5} y={8} width={20} height={2} color={'blue'} />
-                        <Rect x={5} y={19} width={20} height={2} color={'blue'} />
-                        <Rect x={5} y={29} width={20} height={2} color={'blue'} />
+                        <Rect x={750} y={0} width={30} height={40} color={'red'} />
+                        <Rect x={755} y={8} width={20} height={2} color={'blue'} />
+                        <Rect x={755} y={19} width={20} height={2} color={'blue'} />
+                        <Rect x={755} y={29} width={20} height={2} color={'blue'} />
                     </Group>
-                    <Circle cx={cx} cy={cy} r={10} color="red" />
+                    <Circle cx={cx} cy={cy} r={5} color="red" />
                     {/* {console.log('redner view', currentPage)} */}
                     {
                         !isSwiper && <MultiTitle title={title} touchText={touchText} isTouch={isTouch} page={currentPage} />
@@ -221,12 +225,12 @@ function PageDetail({ page, currentPage }) {
                 <Canvas style={styles.wrap} onTouch={touchHandler} >
                     <Image image={image1} fit={'fill'} x={0} y={0} width={width} height={height} />
                     <Group >
-                        <Rect x={0} y={0} width={30} height={40} color={'red'} />
-                        <Rect x={5} y={8} width={20} height={2} color={'blue'} />
-                        <Rect x={5} y={19} width={20} height={2} color={'blue'} />
-                        <Rect x={5} y={29} width={20} height={2} color={'blue'} />
+                    <Rect x={750} y={0} width={30} height={40} color={'red'} />
+                        <Rect x={755} y={8} width={20} height={2} color={'blue'} />
+                        <Rect x={755} y={19} width={20} height={2} color={'blue'} />
+                        <Rect x={755} y={29} width={20} height={2} color={'blue'} />
                     </Group>
-                    <Circle cx={cx} cy={cy} r={10} color="red" />
+                    <Circle cx={cx} cy={cy} r={5} color="red" />
                     {
                         isSwiper && <MultiTitle title={title} touchText={touchText} isTouch={isTouch} page={currentPage} />
                     }
@@ -238,7 +242,7 @@ function PageDetail({ page, currentPage }) {
 
             </Swiper>
 
-        </View>
+        </SafeAreaView>
     );
 }
 

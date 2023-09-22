@@ -5,18 +5,16 @@ import Sound from "react-native-sound";
 let isTextFinish = true;
 
 const Title = ({ title, touchText, isTouch, page, orderTitle, handleOrder }) => {
-
     const font = useFont(require("../../asserts/fonts/Nasa21-l23X.ttf"), 32);
 
-    const titleText = title.belong_text.text;
+    const titleText = title ? title.belong_text.text : '';
     const wordList = titleText.split(" ")
 
     // vị trí text
     let x = [];
-    let y = title.position[0];
+    let y =  title ? JSON.parse(title.position)[0] : 150;
 
-
-    const sync_data = title.belong_text.has_audio[0].sync_data
+    const sync_data = title ? JSON.parse(title.belong_text.sync_data) : []
 
     const timeout = sync_data ? sync_data.map((item, index) => {
         return item.e - item.s;
@@ -36,8 +34,8 @@ const Title = ({ title, touchText, isTouch, page, orderTitle, handleOrder }) => 
 
     useEffect(() => {
         
-        if ( title.page_id == page+1) {
-            const soundTitle = new Sound(`${title.belong_text.has_audio[0].file_path}`, Sound.MAIN_BUNDLE, (error) => {
+        if (title && title.page_id == page+1) {
+            const soundTitle = new Sound(`${title.belong_text.has_audio.audio}`, Sound.MAIN_BUNDLE, (error) => {
                 if (error) {
                     console.log('failed to load the sound ', error);
                     return;
@@ -62,7 +60,7 @@ const Title = ({ title, touchText, isTouch, page, orderTitle, handleOrder }) => 
 
     useEffect(() => {
         if (!isTextFinish) {
-            console.log("index", index, "-", wordList)
+            // console.log("index", index, "-", wordList)
             const id = setTimeout(() => {
                 let newColor = ArrayColor;
                 newColor[index] = 'black' ? 'red' : 'black';
@@ -80,11 +78,16 @@ const Title = ({ title, touchText, isTouch, page, orderTitle, handleOrder }) => 
         }
     }, [color])
 
+    const checkTouchText = (word, touchText) => {
+        const wordInTitle = /^[A-Za-z]+$/.test(word[word.length-1]) ?  word.toLowerCase() : word.toLowerCase().slice(0,touchText.length);
+        return touchText.toLowerCase() === wordInTitle;
+    }
+
     useEffect(() => {
         if (isTextFinish) {
             wordList.map((item, index) => {
 
-                if (item == touchText) {
+                if (checkTouchText(item, touchText)) {
                     let newColor = ArrayColor;
                     newColor[index] = 'black' ? 'red' : 'black';
                     setColor(newColor);
@@ -106,7 +109,7 @@ const Title = ({ title, touchText, isTouch, page, orderTitle, handleOrder }) => 
                     y += font ? font.getTextWidth(item) + font.getTextWidth(" ") : 10;
 
                     return (
-                        <Text key={index} font={font} text={item} color={color[index]} x={x[index]} y={title.position[1]} />
+                        <Text key={index} font={font} text={item} color={color[index]} x={x[index]} y={title ? JSON.parse(title.position)[1] : 50} />
                     )
                 })
             }

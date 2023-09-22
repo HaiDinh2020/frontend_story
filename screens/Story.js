@@ -16,8 +16,8 @@ function Story({ navigation }) {
 
     const getToken = async () => {
         try {
-            // const token = await AsyncStorage.getItem('token');
-            const token = '27|OTDG20Pjf0Y40TWUq56Fq4BWPgOJTr7AKkaZgvRB'
+            const token = await AsyncStorage.getItem('token');
+            // const token = '27|OTDG20Pjf0Y40TWUq56Fq4BWPgOJTr7AKkaZgvRB'
             console.log('Token:', token);
             return token;
         } catch (error) {
@@ -29,20 +29,29 @@ function Story({ navigation }) {
     const getStories = async () => {
         try {
             const baererToken = await getToken();
-            const response = await axios.get(url.getAllData, {
+            const response = await axios.get(url.getStories, {
                 headers: {
                     Authorization: `Bearer ${baererToken}`,
                 },
             });
             setStory(response.data);
             console.log(1, response.data)
-            dispatch(loadStory(response.data))
+            // dispatch(loadStory(response.data))
         } catch (error) {
             console.error(error);
         } finally {
             setLoading(false);
         }
     };
+
+    // const getInforStorage = async () => {
+    //     try {
+    //         const infor = await AsyncStorage.getInfor();
+    //         console.log("infor: ", infor);
+    //     } catch (error) {
+    //         console.log("err: ", error)
+    //     }
+    // }
 
     useEffect(() => {
         getStories();
@@ -76,7 +85,7 @@ function Story({ navigation }) {
                                 <TouchableOpacity
                                     style={styles.story}
                                     onPress={() =>
-                                        navigation.navigate('Page', { pages: item.has_page })
+                                        navigation.navigate('StoryDetail', { pages: item.id })
                                     }
                                 >
                                     <Image

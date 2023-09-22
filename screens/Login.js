@@ -39,7 +39,7 @@ function Login({ navigation }) {
         
         
       }
-      navigation.navigate('StoryDetail')
+      navigation.navigate('Home')
   }
 
   const saveToken = async (token) => {
