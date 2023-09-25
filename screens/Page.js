@@ -4,13 +4,14 @@ import PageDetail from './PageDetail';
 import { url } from '../constants';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+// import  OrientationLocker  from 'react-native-orientation-locker'; 
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
 function Page(props) {
 
+    // OrientationLocker.unlockAllOrientations();
     const [isLoading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(0);
 
@@ -108,5 +109,7 @@ const styles = StyleSheet.create(
         }
     }
 )
+
+
 
 export default Page;

@@ -31,6 +31,7 @@ function Login({ navigation }) {
           } else {
             console.log(response.data.token)
             saveToken(response.data.token)
+            navigation.navigate('Home')
           }
         })
         .catch(function (error) {
@@ -39,7 +40,6 @@ function Login({ navigation }) {
         
         
       }
-      navigation.navigate('Home')
   }
 
   const saveToken = async (token) => {

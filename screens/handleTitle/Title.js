@@ -42,6 +42,8 @@ const Title = ({ title, touchText, isTouch, page, orderTitle, handleOrder }) => 
                 } else {
                     console.log('load sound success')
                     soundTitle.play()
+                    // soundTitle.setSpeed(0.5)
+                    // console.log(soundTitle)
                     setIndex(0)
                     setColor(ArrayColor)
                     isTextFinish = false

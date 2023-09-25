@@ -7,8 +7,11 @@ import { fontSizes, url } from '../constants'
 // import { useSelector, useDispatch } from 'react-redux';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadStory } from '../actions/actions';
+// import OrientationLocker from 'react-native-orientation-locker'
+
 function Story({ navigation }) {
 
+    // OrientationLocker.lockToPortrait();
     const dispatch = useDispatch();
 
     const [isLoading, setLoading] = useState(true);

@@ -26,7 +26,7 @@ function MultiTitle({ title, touchText, isTouch, page, textFinish }) {
     }, [page])
 
     return (
-        orderTitleDisplay[orderTitle] != null && orderTitleDisplay[orderTitle] && <Title key={1} title={title[orderTitle]} touchText={touchText} isTouch={isTouch} page={page} handleOrder={handleOrder} orderTitle={orderTitle}/>
+        orderTitleDisplay[orderTitle] != null && orderTitleDisplay[orderTitle] && <Title title={title[orderTitle]} touchText={touchText} isTouch={isTouch} page={page} handleOrder={handleOrder} orderTitle={orderTitle}/>
         
     );
 }
