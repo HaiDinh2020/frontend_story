@@ -5,7 +5,8 @@ import Sound from "react-native-sound";
 import Swiper from "react-native-swiper";
 import { handleMultiTitle } from "../actions/actions";
 import MultiTitle from "./handleTitle/MultiTitle";
-
+import Touch from "./handleTouch/Touch";
+// import { handleTouch } from "./handleTouch/Touch";
 
 // Enable playback in silence mode
 Sound.setCategory('Playback');
@@ -32,85 +33,30 @@ function PageDetail({ page, currentPage }) {
     const [sound, setSound] = useState(null)
 
 
-    const playSound = () => {
-        const soundPlay = new Sound(`${sound}`, Sound.MAIN_BUNDLE, (error) => {
-            if (error) {
-                console.log('failed to load the sound ', error);
-                return;
-            } else {
-                soundPlay.play();
-            }
-        });
-    }
+    
 
     // touch success
     const [isTouch, setIsTouch] = useState(false)
-    const [touchPosition, setTouchPositon] = useState([10, 10])
-
-
-
-    const isInArea = (point, area) => {
-        if (point.x > area.star_position[0] && point.y > area.star_position[1]
-            && point.x < area.star_position[0] + area.boundingbox[0]
-            && point.y < area.star_position[1] + area.boundingbox[1]) {
-            return true;
-        }
-
-        return false;
-    }
 
     const cx = useValue(100);
     const cy = useValue(100);
 
     const touchHandler = useTouchHandler({
         onStart: ({ x, y }) => {
+            
             cx.current = x;
             cy.current = y;
-            touches.map((item, index) => {
-                if(item) {
-                    const object = JSON.parse(item.data);
-                    const objectText = item.belong_text.text;
-    
-                    if (isInArea({ x, y }, object)) {
-    
-                        setTouchText(objectText);
-                        isSoundPlay = true;
-                        setSound(item.belong_text.has_audio.audio);
-                        setIsTouch(true)
-    
-                        setTouchPositon([x, y])
-                        return;
-                    }
-                }
-                
-            })
+            setIsTouch(true);
         },
+        onEnd: () => {
+            setTimeout(() => {
+                setIsTouch(false)
+            }, 2000)
+        }
     });
 
-    setTimeout(() => {
-        setIsTouch(false)
-    }, 2000)
+    
 
-
-    useEffect(() => {
-        if (setLengthTitleInRedux) {
-            setLengthTitleInRedux = true;
-            // console.log(1, title.length, " - ",  currentPage)
-        }
-
-        return () => {
-            setLengthTitleInRedux = true;
-        }
-
-    }, [])
-
-
-    useEffect(() => {
-        if (isSoundPlay) {
-            isSoundPlay = false;
-            playSound();
-        }
-    }, [isTouch])
 
 
 
@@ -206,14 +152,15 @@ function PageDetail({ page, currentPage }) {
                         <Rect x={755} y={29} width={20} height={2} color={'blue'} />
                     </Group>
                     <Circle cx={cx} cy={cy} r={5} color="red" />
-                    {/* {console.log('redner view', currentPage)} */}
                     {
                         !isSwiper && <MultiTitle title={title} touchText={touchText} isTouch={isTouch} page={currentPage} />
                     }
 
-                    {isTouch &&
-                        <Text font={font} text={touchText} color={'blue'} x={touchPosition[0]} y={touchPosition[1]} />
+                    {isTouch && 
+                        <Touch position={{cx, cy}} touches={touches} />
                     }
+
+
 
                     {/* <Path
                         path={path}
@@ -222,7 +169,7 @@ function PageDetail({ page, currentPage }) {
                 </Canvas>
 
 
-                <Canvas style={styles.wrap} onTouch={touchHandler} >
+                {/* <Canvas style={styles.wrap} onTouch={touchHandler} >
                     <Image image={image1} fit={'fill'} x={0} y={0} width={width} height={height} />
                     <Group >
                     <Rect x={750} y={0} width={30} height={40} color={'red'} />
@@ -237,7 +184,7 @@ function PageDetail({ page, currentPage }) {
                     {isTouch &&
                         <Text font={font} text={touchText} color={'blue'} x={touchPosition[0]} y={touchPosition[1]} />
                     }
-                </Canvas>
+                </Canvas> */}
 
 
             </Swiper>

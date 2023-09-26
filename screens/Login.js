@@ -39,7 +39,8 @@ function Login({ navigation }) {
         
         
       }
-      navigation.navigate('CRUD')
+      // navigation.navigate('CRUD')
+      navigation.navigate('Home')
   }
 
   const saveToken = async (token) => {

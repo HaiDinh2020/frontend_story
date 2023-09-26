@@ -1,5 +1,5 @@
 
-const ngrokUrl = 'https://77e4-42-114-186-12.ngrok-free.app/'
+const ngrokUrl = 'https://cf1e-222-252-17-100.ngrok-free.app/'
 
 export default {
     getAllData : ngrokUrl + 'api/allData',
