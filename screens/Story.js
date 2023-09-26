@@ -11,7 +11,7 @@ import { loadStory } from '../actions/actions';
 
 function Story({ navigation }) {
 
-    // OrientationLocker.lockToPortrait();
+    
     const dispatch = useDispatch();
 
     const [isLoading, setLoading] = useState(true);

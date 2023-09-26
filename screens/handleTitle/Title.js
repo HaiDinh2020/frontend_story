@@ -86,6 +86,7 @@ const Title = ({ title, touchText, isTouch, page, orderTitle, handleOrder }) => 
     }
 
     useEffect(() => {
+        // console.log("rend after touch", )
         if (isTextFinish) {
             wordList.map((item, index) => {
 
@@ -101,6 +102,7 @@ const Title = ({ title, touchText, isTouch, page, orderTitle, handleOrder }) => 
             })
 
         }
+        
     }, [isTouch])
 
     return (

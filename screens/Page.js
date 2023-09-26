@@ -4,14 +4,11 @@ import PageDetail from './PageDetail';
 import { url } from '../constants';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import  OrientationLocker  from 'react-native-orientation-locker'; 
 
-const WIDTH = Dimensions.get('window').width;
-const HEIGHT = Dimensions.get('window').height;
+const WIDTH = Dimensions.get('screen').width;
+const HEIGHT = Dimensions.get('screen').height;
 
 function Page(props) {
-
-    // OrientationLocker.unlockAllOrientations();
     const [isLoading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(0);
 
@@ -53,8 +50,8 @@ function Page(props) {
         getStoryById(pageId)
     }, [])
 
-    onChange = (nativeEvent) => {
-        const offsetX = nativeEvent.nativeEvent.contentOffset.x;
+    const onChange = (nativeEvent) => {
+        const offsetX = nativeEvent.contentOffset.x;
         const page = Math.floor((offsetX / HEIGHT) / 2);
         setCurrentPage(page);
     }
@@ -71,7 +68,7 @@ function Page(props) {
                     // snapToInterval={WIDTH} 
                     decelerationRate={'fast'}
                     horizontal
-                    onScroll={onChange}
+                    onScroll={({nativeEvent}) => onChange(nativeEvent)}
                     showsHorizontalScrollIndicator={false}
                     pagingEnabled
                     style={styles.container}>
@@ -90,22 +87,8 @@ function Page(props) {
 const styles = StyleSheet.create(
     {
         container: {
-            flex: 1
-        },
-        wrap: {
-            width: WIDTH,
-            height: HEIGHT,
-            backgroundColor: 'yellow'
-        },
-        background: {
-            height: 180,
-            width: 100,
-            backgroundColor: 'blue'
-        },
-        image: {
-            height: 100,
-            width: 100,
-            backgroundColor: 'black'
+            flex: 1,
+            backgroundColor:'red'
         }
     }
 )

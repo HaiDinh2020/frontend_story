@@ -5,6 +5,7 @@ import Profile from "./Profile";
 import Register from "./Register";  
 import Audio from "./Audio";
 import Pages from "./PageDetail";
+import Menu from "./Menu";
 
 export {
     Login,
@@ -13,5 +14,6 @@ export {
     Page,
     Profile,
     Audio,
-    Pages
+    Pages,
+    Menu
 };

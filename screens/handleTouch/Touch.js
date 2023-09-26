@@ -2,23 +2,24 @@ import { Text, useFont } from "@shopify/react-native-skia";
 import { useEffect, useState } from "react";
 import Sound from "react-native-sound";
 
-function Touch ({position, touches}) {
+function Touch ({position, touches, handleSetIsTouchObject}) {
 
     const font = useFont(require("../../asserts/fonts/Nasa21-l23X.ttf"), 32);
     
     const [touchText, setTouchText] = useState("");
     const [isSoundPlay, setIsSoundPlay] = useState(false);
 
-    let soundPlay;
+    const handleTouchObject = (objectText) => {
+        handleSetIsTouchObject(objectText);
+    }
     const playSound = (sound) => {
-        soundPlay = new Sound(`${sound}`, Sound.MAIN_BUNDLE, (error) => {
+        const soundPlay = new Sound(`${sound}`, Sound.MAIN_BUNDLE, (error) => {
             if (error) {
                 console.log('failed to load the sound ', error);
                 return;
             } else {
                 soundPlay.play();
                 setIsSoundPlay(true);
-                console.log("sound play here")
             }
         });
     }
@@ -44,7 +45,7 @@ function Touch ({position, touches}) {
                     playSound(item.belong_text.has_audio.audio)
                     
                     setTouchText(objectText);
-
+                    handleTouchObject(objectText)
     
                 }
             }
@@ -53,10 +54,10 @@ function Touch ({position, touches}) {
     }
 
     useEffect(() => {
-        console.log("position: ", position)
+        // console.log("position: ", position)
         handleTouch();
         return () => {
-            console.log("return here")
+            // console.log("return here")
             // if(soundPlay) soundPlay.release()
         }
     }, [])

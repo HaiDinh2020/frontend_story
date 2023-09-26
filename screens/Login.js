@@ -5,9 +5,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { isValidEmail, isValidPassword } from '../utily/Validate'
 import axios from 'axios';
 import { url, fontSizes } from '../constants';
+import OrientationLocker  from 'react-native-orientation-locker';
 
 function Login({ navigation }) {
-
+  // OrientationLocker.lockToPortrait();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   // validate email, pasword
@@ -40,7 +41,7 @@ function Login({ navigation }) {
         
       }
       // navigation.navigate('CRUD')
-      navigation.navigate('Home')
+      navigation.navigate('Menu')
   }
 
   const saveToken = async (token) => {
