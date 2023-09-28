@@ -1,9 +1,7 @@
 import React from "react";
 import { Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MenuButton from "../component/MenuButton";
-
-const WITH = Dimensions.get('screen').width;
-const HEIGHT = Dimensions.get('screen').height;
+import { WITH, HEIGHT } from "../constants";
 
 function Menu({navigation}) {
 
@@ -13,11 +11,11 @@ function Menu({navigation}) {
     }
     
     const playStoryIcon = () => {
-        
+        navigation.navigate('StoryIcon')
     } 
 
-    const crudAudio = () => {
-
+    const crud = () => {
+        navigation.navigate('CreateText')
     }
 
     const exit = () => {
@@ -36,7 +34,7 @@ function Menu({navigation}) {
                 <View style={styles.option} >
                     <MenuButton optionText={"Story"} handlePress={playStory}/>
                     <MenuButton optionText={"Story Icon"} handlePress={playStoryIcon}/>
-                    <MenuButton optionText={"CRUD Audio"} handlePress={crudAudio}/>
+                    <MenuButton optionText={"CRUD"} handlePress={crud}/>
                     {/* <MenuButton optionText={"Exit"} handlePress={exit}/> */}
                 </View>
 
@@ -52,8 +50,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'green'
     },
     background: {
-        width: WITH,
-        height: HEIGHT,
+        width: WITH < HEIGHT ? WITH : HEIGHT,
+        height: HEIGHT > WITH ? HEIGHT : WITH,
     },
     header: {
         flex: 4

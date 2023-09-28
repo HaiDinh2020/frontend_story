@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Text, Group, useFont } from '@shopify/react-native-skia';
 import Sound from "react-native-sound";
 
@@ -31,6 +31,9 @@ const Title = ({ title, touchText, isTouch, page, orderTitle, handleOrder }) => 
         handleOrder(orderTitle+1);
     }
     
+    useEffect(() => {
+        setColor(ArrayColor);
+    }, [])
 
     useEffect(() => {
         
@@ -62,14 +65,14 @@ const Title = ({ title, touchText, isTouch, page, orderTitle, handleOrder }) => 
 
     useEffect(() => {
         if (!isTextFinish) {
-            // console.log("index", index, "-", wordList)
+            console.log("index", index)
             const id = setTimeout(() => {
                 let newColor = ArrayColor;
-                newColor[index] = 'black' ? 'red' : 'black';
+                newColor[index] = newColor[index] === 'black' ? 'red' : 'black';
                 setColor(newColor);
 
             }, timeout[index - 1])
-
+            // console.log(11,ArrayColor)
             if (numWord > 0 && index >= numWord + 1) {
                 setIndex(-1)
                 clearTimeout(id)
@@ -86,21 +89,28 @@ const Title = ({ title, touchText, isTouch, page, orderTitle, handleOrder }) => 
     }
 
     useEffect(() => {
-        // console.log("rend after touch", )
+        console.log("rend before touch 2", )
         if (isTextFinish) {
-            wordList.map((item, index) => {
+            wordList.map((item, ind) => {
 
                 if (checkTouchText(item, touchText)) {
                     let newColor = ArrayColor;
-                    newColor[index] = 'black' ? 'red' : 'black';
+                    newColor[ind] = newColor[index] === 'black' ? 'red' : 'black';
+                    // x[index-1] += 15;
                     setColor(newColor);
-                    setTimeout(() => {
-                        newColor[index] = 'black';
-                        setColor(newColor)
-                    }, 2000)
+                    
                 }
             })
 
+        }
+        setTimeout(() => {
+            // newColor[index] = 'black';
+            setColor(Array.from({ length: numWord }, (_, i) => "black"))
+            console.log('run time', ArrayColor)
+        }, 2000)
+        return() => {
+            // console.log('return after touch')
+            isTextFinish = true;
         }
         
     }, [isTouch])

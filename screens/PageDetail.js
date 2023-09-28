@@ -42,6 +42,10 @@ function PageDetail({ page, currentPage }) {
             cy.current = y;
             setIsTouch(true);
         },
+        onActive: ({x,y}) => {
+            cx.current = x;
+            cy.current = y;
+        },
         onEnd: () => {
             setTimeout(() => {
                 setIsTouch(false)
@@ -152,14 +156,14 @@ function PageDetail({ page, currentPage }) {
             >
 
                 <Canvas style={styles.container} onTouch={touchHandler} >
-                    <Image image={image1} fit={'fill'} x={0} y={0} width={width} height={height} />
+                    <Image image={image1} fit={'fill'} x={0} y={0} width={width > height ? width : height} height={height < width ? height : width} />
                     <Group >
                         <Rect x={750} y={0} width={30} height={40} color={'red'} />
                         <Rect x={755} y={8} width={20} height={2} color={'blue'} />
                         <Rect x={755} y={19} width={20} height={2} color={'blue'} />
                         <Rect x={755} y={29} width={20} height={2} color={'blue'} />
                     </Group>
-                    <Circle cx={cx} cy={cy} r={5} color="red" />
+                    <Circle cx={cx} cy={cy} r={10} color="red" />
                     {
                         !isSwiper && <MultiTitle title={title} touchText={touchText} isTouch={isTouchObject} page={currentPage} />
                     }
