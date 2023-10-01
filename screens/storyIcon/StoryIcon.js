@@ -96,17 +96,7 @@ function StoryIcon({ navigation }) {
                             </TouchableOpacity>
                         </Animated.View>
                     </View>
-                    {/* {isVisible && (
-                    <Animated.View style={[position.getLayout(), styles.container2]}>
-
-                    </Animated.View>
-                    <Animated.View
-                        style={[pan.getLayout(), styles.box]}
-                    />
-                    )} */}
                 </View>
-
-
             </View>
 
         </SafeAreaView>
@@ -114,32 +104,6 @@ function StoryIcon({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    container2: {
-
-
-        width: 120,
-        height: 130,
-        backgroundColor: "red",
-        // transform: [{ translateY: 100 }],
-        // transition: {
-        //     transform: "1s ease",
-        // },
-        // transform: [{translateY: 50}],
-        // 
-        transform: [{
-            translateX: 50
-        }],
-        transition: {
-            transform: "1s ease",
-        },
-
-    },
-    box: {
-        backgroundColor: '#61dafb',
-        width: 80,
-        height: 80,
-        borderRadius: 4,
-    },
     container: {
         flex: 1
     },

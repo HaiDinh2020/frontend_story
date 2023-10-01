@@ -151,6 +151,9 @@ export default DataStoryIcon = {
                     "data": {
                         "image_width": 100,
                         "image_height": 100,
+                        "position_num": [
+                            1
+                        ]
                     },
                     "text_id": 1,
                     "belong_text": {
@@ -169,6 +172,168 @@ export default DataStoryIcon = {
                         }
                     }
                 },
+                {
+                    "id": 6,
+                    "page_id": 2,
+                    "data": {
+                        "image_width": 70,
+                        "image_height": 70,
+                        "position_num": [
+                            1
+                        ],
+                    },
+                    "text_id": 1,
+                    "belong_text": {
+                        "id": 1,
+                        "text": "Milo",
+                        "sync_data": null,
+                        "has_audio": {
+                            "id": 1,
+                            "audio": "https://res.cloudinary.com/dmrsdkvzl/video/upload/v1695950266/StoryIcon/audio/ad1eaca39b8a8652d3976a95e89da7a5_kbjyg7.mp3",
+                            "text_id": 1
+                        },
+                        "has_icon": {
+                            "id": 1,
+                            "icon": "https://res.cloudinary.com/dmrsdkvzl/image/upload/v1695950098/StoryIcon/background/e8a05e8c7b6c279d5b5d43ff50ee1f59_oprmcr.png",
+                            "text_id": 1
+                        }
+                    }
+                },
+                {
+                    "id": 6,
+                    "page_id": 2,
+                    "data": {
+                        "image_width": 70,
+                        "image_height": 70,
+                        "position_num": [
+                            2
+                        ],
+                    },
+                    "text_id": 1,
+                    "belong_text": {
+                        "id": 1,
+                        "text": "Milo",
+                        "sync_data": null,
+                        "has_audio": {
+                            "id": 1,
+                            "audio": "https://res.cloudinary.com/dmrsdkvzl/video/upload/v1695950266/StoryIcon/audio/ad1eaca39b8a8652d3976a95e89da7a5_kbjyg7.mp3",
+                            "text_id": 1
+                        },
+                        "has_icon": {
+                            "id": 1,
+                            "icon": "https://res.cloudinary.com/dmrsdkvzl/image/upload/v1695950098/StoryIcon/background/e8a05e8c7b6c279d5b5d43ff50ee1f59_oprmcr.png",
+                            "text_id": 1
+                        }
+                    }
+                },
+                {
+                    "id": 6,
+                    "page_id": 2,
+                    "data": {
+                        "image_width": 100,
+                        "image_height": 100,
+                        "position_num": [
+                            2
+                        ]
+                    },
+                    "text_id": 1,
+                    "belong_text": {
+                        "id": 1,
+                        "text": "Roy",
+                        "sync_data": null,
+                        "has_audio": {
+                            "id": 1,
+                            "audio": "https://res.cloudinary.com/dmrsdkvzl/video/upload/v1695873311/StoryIcon/audio/7d127b3420177e6764bb1f34b32f7ee1_fcjlct.mp3",
+                            "text_id": 1
+                        },
+                        "has_icon": {
+                            "id": 1,
+                            "icon": "https://res.cloudinary.com/dmrsdkvzl/image/upload/v1695873192/StoryIcon/background/f4f5dcaa85909646e04bde9b5f9b3f04_jgolim.png",
+                            "text_id": 1
+                        }
+                    }
+                },
+                {
+                    "id": 6,
+                    "page_id": 2,
+                    "data": {
+                        "image_width": 50,
+                        "image_height": 50,
+                        "position_num": [
+                            1
+                        ],
+                    },
+                    "text_id": 1,
+                    "belong_text": {
+                        "id": 1,
+                        "text": "magnifying glass",
+                        "sync_data": null,
+                        "has_audio": {
+                            "id": 1,
+                            "audio": "https://res.cloudinary.com/dmrsdkvzl/video/upload/v1695950295/StoryIcon/audio/3da66ca5f5eeed4e2268d9e9ca514bfd_xznkmo.mp3",
+                            "text_id": 1
+                        },
+                        "has_icon": {
+                            "id": 1,
+                            "icon": "https://res.cloudinary.com/dmrsdkvzl/image/upload/v1695950221/StoryIcon/background/0e46af325e790c788fad7cd876b9aa26_dheskx.png",
+                            "text_id": 1
+                        }
+                    }
+                },
+                {
+                    "id": 6,
+                    "page_id": 2,
+                    "data": {
+                        "image_width": 50,
+                        "image_height": 50,
+                        "position_num": [
+                            1
+                        ],
+                    },
+                    "text_id": 1,
+                    "belong_text": {
+                        "id": 1,
+                        "text": "toy bone",
+                        "sync_data": null,
+                        "has_audio": {
+                            "id": 1,
+                            "audio": "https://res.cloudinary.com/dmrsdkvzl/video/upload/v1695950378/StoryIcon/audio/a8dae8530bc354fd620f11dcbc482392_jjlsqy.mp3",
+                            "text_id": 1
+                        },
+                        "has_icon": {
+                            "id": 1,
+                            "icon": "https://res.cloudinary.com/dmrsdkvzl/image/upload/v1695950399/StoryIcon/background/9367424a6ba8c4e79bfd5be4ad21a554_dezfj1.png",
+                            "text_id": 1
+                        }
+                    }
+                },
+                {
+                    "id": 6,
+                    "page_id": 2,
+                    "data": {
+                        "image_width": 60,
+                        "image_height": 60,
+                        "position_num": [
+                            1
+                        ],
+                    },
+                    "text_id": 1,
+                    "belong_text": {
+                        "id": 1,
+                        "text": "binoculars",
+                        "sync_data": null,
+                        "has_audio": {
+                            "id": 1,
+                            "audio": "https://res.cloudinary.com/dmrsdkvzl/video/upload/v1695950466/StoryIcon/audio/529527962d68fa4f561e47f1e77f8eba_zxcu4z.mp3",
+                            "text_id": 1
+                        },
+                        "has_icon": {
+                            "id": 1,
+                            "icon": "https://res.cloudinary.com/dmrsdkvzl/image/upload/v1695950438/StoryIcon/background/0568a67c761b42364d7db6f58e776079_r3smfh.png",
+                            "text_id": 1
+                        }
+                    }
+                },
                
             ],
             "has_text_config": [
@@ -176,7 +341,7 @@ export default DataStoryIcon = {
                     "id": 2,
                     "page_id": 2,
                     "text_id": 6,
-                    "position": "[250, 30]",
+                    "position": "[50, 70]",
                     "belong_text": {
                         "id": 6,
                         "text": "Roy and Milo went to the jungle to explore. Milo brought his toy bone. Roy brought his binoculars and a magnifying glass. They were very excited!",
@@ -266,18 +431,18 @@ export default DataStoryIcon = {
                                 "w": "his"
                             },
                             {
-                                "e": 5430,
+                                "e": 6160,
                                 "s": 5030,
                                 "te": 63,
                                 "ts": 61,
-                                "w": "toy"
+                                "w": "toy bone"
                             },
                             {
                                 "e": 6160,
-                                "s": 5430,
+                                "s": 6160,
                                 "te": 69,
                                 "ts": 65,
-                                "w": "bone."
+                                "w": "."
                             },
                             {
                                 "e": 6890,
@@ -326,14 +491,14 @@ export default DataStoryIcon = {
                                 "s": 8780,
                                 "te": 113,
                                 "ts": 104,
-                                "w": "magnifying"
+                                "w": "magnifying glass"
                             },
                             {
                                 "e": 10480,
                                 "s": 9690,
                                 "te": 120,
                                 "ts": 115,
-                                "w": "glass."
+                                "w": "."
                             },
                             {
                                 "e": 10980,
