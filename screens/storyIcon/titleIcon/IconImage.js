@@ -1,55 +1,106 @@
-import React, { useEffect, useRef } from 'react';
-import { Group, Image, Rect, useImage, Text, useFont, Circle, Canvas } from '@shopify/react-native-skia';
-import Animated, { useAnimatedStyle, useDerivedValue, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated';
+import React, { useEffect, useState } from 'react';
+import { View } from 'react-native'
+import Animated, {  useAnimatedStyle,  useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
+import { StyleSheet } from 'react-native';
+import Sound from 'react-native-sound';
 
 
-function IconImage({ icon, x, y, touch, positionTouch }) {
+function IconImage({ icon, indexIcon, indexTime, timeIcon }) {
 
-    const font2 = useFont(require("../../../asserts/fonts/Nasa21-l23X.ttf"), 12);
+    const rectWith = icon.data.image_width;
+    const rectHeight = icon.data.image_height
 
-    const rectWith = icon.data.image_width / 2;
-    const rectHeight = icon.data.image_height / 2
-    const iconImage = useImage(icon.belong_text.has_icon.icon)
+    const iconSizeWith = useSharedValue(rectWith);
+    const iconSizeHeight = useSharedValue(rectHeight);
+    const iconNameOpacity = useSharedValue(0)
 
-    const iconWith = useSharedValue(rectWith);
-    const iconHeight = useSharedValue(rectHeight);
-    // const iconHeight = useDerivedValue(() => iconWith);
-    const iconText = useSharedValue('');
+    const styleIcon = useAnimatedStyle(() => ({
+        width: iconSizeWith.value,
+        height: iconSizeHeight.value,
+    }))
+
+    const styleIconName = useAnimatedStyle(() => ({
+        opacity: iconNameOpacity.value,
+        top: rectHeight
+    }))
+
+    const playSound = (sound) => {
+        var audio = new Sound(
+            sound,
+            null,
+            error => {
+                if (error) {
+                    console.log('failed to load the sound', error);
+                    return;
+                }
+                // if loaded successfully
+                audio.play();
+            },
+        );
+    }
 
 
-    
-    const hello = useRef(true)
+    const [touch, setTouch] = useState(false);
+
+    const handleTouch = () => {
+        console.log('touch')
+        if (!touch) {
+            iconSizeWith.value = withTiming(iconSizeWith.value / 1.5, { duration: 1000 })
+            iconSizeHeight.value = withTiming(iconSizeHeight.value / 1.5, { duration: 1000 })
+            iconNameOpacity.value = withTiming(1, { duration: 1000 });
+            playSound(icon.belong_text.has_audio.audio);
+        } else {
+            iconSizeWith.value = withTiming(iconSizeWith.value * 1.5, { duration: 1000 })
+            iconSizeHeight.value = withTiming(iconSizeHeight.value * 1.5, { duration: 1000 })
+            iconNameOpacity.value = withTiming(0, { duration: 1000 });
+            playSound(icon.belong_text.has_audio.audio);
+        }
+        setTouch(!touch);
+    }
+
     useEffect(() => {
-        
-        if(hello.current) {
+        if (indexTime == indexIcon) {
 
-            if(positionTouch && positionTouch.x > x && positionTouch.y > (y - rectHeight / 1.5) && positionTouch.x < x+rectHeight && positionTouch.y < (y - rectHeight / 1.5) + rectWith) {
-                console.log('this is icon', icon.belong_text.text)
-                iconHeight.value = withTiming(iconHeight.value+50, { duration: 1000 })
-                iconText.value =icon.belong_text.text
-            }
+            iconSizeWith.value = withSequence(
+                withTiming(iconSizeWith.value * 1.5, { duration: timeIcon / 2 }),
+                withTiming(iconSizeWith.value, { duration: timeIcon / 2 })
+            )
+            iconSizeHeight.value = withSequence(
+                withTiming(iconSizeHeight.value * 1.5, { duration: timeIcon / 2 }),
+                withTiming(iconSizeHeight.value, { duration: timeIcon / 2 })
+            )
         }
-        return () => {
-            hello.current = !hello.current;
-        }
-           
-    }, [touch])
+    }, [indexTime])
 
-    const size = 256;
-  const r = useSharedValue(0);
-  const c = useDerivedValue(() => size - r.value);
-  useEffect(() => {
-    r.value = withRepeat(withTiming(size * 0.33, { duration: 1000 }), -1);
-  }, [r, size]);
 
     return (
-        <Group >
-            <Rect width={rectWith} height={iconHeight} x={x} y={y - rectHeight / 1.5} color={'red'} opacity={0.6}/>
-            <Text font={font2} text={iconText.value} x={x} y={y+20} />
-            <Image fit={'fill'} image={iconImage} width={iconWith.value} height={iconHeight.value} x={x} y={y } />
-        </Group>
-        // <Animated.Image source={{uri:icon.belong_text.has_icon.icon }} style={{position:'absolute', width: iconWith, height:iconHeight, left:x, top:y}} />
+        <View style={[{ width: rectWith, height: rectHeight}, styles.container]} >
+            <Animated.View style={styleIcon} onTouchStart={handleTouch}>
+                <Animated.Image source={{ uri: icon.belong_text.has_icon.icon }} style={styles.image} />
+            </Animated.View>
+            <Animated.Text style={[styles.text, styleIconName]}>{icon.belong_text.text}</Animated.Text>
+        </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        position: 'relative'
+    },
+    image: {
+        width: '100%', 
+        height: '100%', 
+        resizeMode: 'contain'
+    },
+    text: {
+        textAlign: 'center',
+        position: 'absolute',
+        color: 'black',
+        width: 200,
+        fontSize: 12
+    }
+})
 
 export default IconImage;

@@ -1,76 +1,116 @@
-import React, { useEffect } from "react";
-import { Text,  Group, useFont, Image, useImage, Canvas } from '@shopify/react-native-skia';
-// import {Text } from 'react-native'
+import React, { useEffect, useState } from "react";
 import IconImage from "./IconImage";
+import Word from "./Word";
+import Sound from "react-native-sound";
 
-const TitleIcon = ({title, icons, touch, positionTouch}) => {
+const TitleIcon = ({ title, icons }) => {
 
-    const font = useFont(require("../../../asserts/fonts/Nasa21-l23X.ttf"), 32);
 
     const titleIcon = title?.belong_text.sync_data;
-    let x = [];
-    let x1 =  title ? JSON.parse(title.position)[0] : 150;
-    
-    let y1 = title ? JSON.parse(title.position)[1] : 50;
 
     const checkIconText = (word, textIcon) => {
-        const wordInTitle = /^[A-Za-z]+$/.test(word[word.length-1]) ?  word.toLowerCase() : word.toLowerCase().slice(0,textIcon.length);
+        const wordInTitle = /^[A-Za-z]+$/.test(word[word.length - 1]) ? word.toLowerCase() : word.toLowerCase().slice(0, textIcon.length);
         return textIcon.toLowerCase() === wordInTitle;
     }
 
-    function handleIcon (word)  {
+    function handleIcon(word) {
         let isIcon = false;
         let icon = null
-        if(!isIcon) {
+        if (!isIcon) {
             icons.map((item, index) => {
-                if(checkIconText(word, item.belong_text.text)) {
+                if (checkIconText(word, item.belong_text.text)) {
                     isIcon = true;
                     icon = item
-                    // console.log(index, item.belong_text.text)
-                    // return ;
                 }
             })
         }
-        
+
         return isIcon ? icon : false;
     }
+    let [loadSuccess, setLoadSuccess] = useState(false);
 
+    // const playSound = (sound) => {
+    //     var audio = new Sound(
+    //         sound,
+    //         null,
+    //         error => {
+    //             if (error) {
+    //                 console.log('failed to load the sound', error);
+    //                 return;
+    //             }
+    //             // if loaded successfully
+    //             setLoadSuccess(true)
+    //             audio.play();
+
+    //         },
+    //     );
+    // }
+
+    const [indexTime, setIndexTime] = useState(0);
+
+    let currentTime = 0;
+    useEffect(() => {
+        console.log('hello world', loadSuccess)
+        // playSound(title.belong_text.has_audio.audio)
+        var audio = new Sound(
+            title.belong_text.has_audio.audio,
+            null,
+            error => {
+                if (error) {
+                    console.log('failed to load the sound', error);
+                    return;
+                }
+                // if loaded successfully
+                setLoadSuccess(true)
+                audio.play();
+            },
+        );
+    }, [])
+
+    useEffect(() => {
+        if (loadSuccess) {
+            const d = new Date();
+            const t = d.getTime();
+            console.log(t)
+            let id = setInterval(() => {
+                currentTime += 50;
+                console.log(currentTime)
+                titleIcon.map((item, index) => {
+                    if (item.s <= currentTime && item.e >= currentTime) {
+                        // console.log(item.s, currentTime, item.e, item.w)
+                        setIndexTime(index)
+                    }
+                })
+                if (currentTime >= titleIcon[(titleIcon.length - 1)].e) {
+                    clearInterval(id);
+                    setIndexTime(-1);
+                    // setLoadSuccess(false);
+                    const d = new Date();
+                    const e = d.getTime();
+                    console.log('end', e, e - t)
+                }
+            }, 50)
+        }
+    }, [loadSuccess])
 
     return (
-        <Group>
+        <>
             {
                 titleIcon.map((item, index) => {
-                    
-                    if(x1 > 600) {
-                        y1 += 60;
-                        x1 = title ? JSON.parse(title.position)[0] : 150;
-                    }
-                    x.push(x1)
-                    
-                    if(handleIcon(item.w)) {
+                    if (handleIcon(item.w)) {
                         const icon = handleIcon(item.w)
-                        const iconWith = icon.data.image_width/2;
-                        x1 += iconWith + font?.getTextWidth(" ");
                         return (
-                            <>
-                            <IconImage key={index} icon={icon} x={x[index]} y={y1} touch={touch} positionTouch={positionTouch}  />
-                            </>
+                            <IconImage key={index} icon={icon} indexIcon={index} indexTime={indexTime} timeIcon={item.e - item.s} />
                         )
                     } else {
-                        x1 += font ? font.getTextWidth(item.w) + font.getTextWidth(" ") : 10
-
                         return (
-                                // <Text style={{position:'absolute', top:y1, left: x[index]}}>{item.w}</Text>
-
-                                <Text key={index} font={font} text={item.w}  x={x[index]} y={y1} />
-                            
+                            <Word key={index} word={item.w} indexWord={index} indexTime={indexTime} />
                         )
                     }
-                     
-                    
+
                 })
             }
-        </Group>
+        </>
     )
 }
 

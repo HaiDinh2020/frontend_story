@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native'
 import DataStoryIcon from './DataStoryIcon';
-import { Canvas, Image, Rect, Text, useFont, useImage, useTouchHandler } from '@shopify/react-native-skia';
+import { Canvas, Rect, useFont, Image, useImage, useTouchHandler } from '@shopify/react-native-skia';
 import { GestureDetector, Gesture, GestureHandlerRootView } from "react-native-gesture-handler";
 import { WITH, HEIGHT } from '../../constants';
 import TitleIcon from './titleIcon/TitleIcon';
-import { Easing, useSharedValue, withTiming } from 'react-native-reanimated';
-import { View } from 'react-native';
+import Animated, { Easing, useSharedValue, withTiming } from 'react-native-reanimated';
+import { View, Text as RNText } from 'react-native';
+import GestureHanle from './titleIcon/GestureHanle';
 
 
 function PageIcon(props) {
@@ -17,50 +18,50 @@ function PageIcon(props) {
     const text_config = pagesIcon[1].has_text_config;
     const title = text_config[0]
     const icons = pagesIcon[1].has_touch
-    const xi = useSharedValue(0);
-
-
-    const [touch, setTouch] = useState(false)
-    const [positionTouch, setPositionTouch] = useState();
+    const picture = useImage(pagesIcon[1].has_picture[0].picture)
+    // console.log((pagesIcon[1].has_picture[0].data.boundingbox).x)
 
     const touchHandler = useTouchHandler({
-        onStart: ({ x, y }) => {
-            setTouch(true)
-            setPositionTouch({x, y});
-            xi.value = withTiming(xi.value+100, {duration: 3000, easing: Easing.bounce})
-        },
-        onEnd: ({ x, y }) => {
-            setTouch(false)
-            // setPositionTouch();
-        }
+        // onStart: ({ x, y }) => {
+        //     setTouch(true)
+        //     setPositionTouch({ x, y });
+        //     xi.value = withTiming(xi.value + 100, { duration: 3000, easing: Easing.bounce })
+        // },
+        // onEnd: ({ x, y }) => {
+        //     setTouch(false)
+        //     // setPositionTouch();
+        // }
     })
 
     const gesture = Gesture.Pan()
         .onTouchesDown((e) => {
-            'worklet'
-            // console.log('hi', e)
-
+            // "worklet" 
+            console.log('touch down', e)
+            
         })
-        .onTouchesUp((e)=>{
-            'worklet'
-            // console.log('canlse')
-
+        .onTouchesMove((e) => {
+            console.log('move', e)
         })
+        .onTouchesUp((e) => {
+            console.log('up', e)
+        })
+
 
     return (
         <SafeAreaView style={styles.container}>
-            <GestureHandlerRootView style={{ flex: 1 }}>
-                <GestureDetector gesture={gesture}>
-                    <Canvas style={styles.container} onTouch={touchHandler} >
-                        <Image image={background} fit={'fill'} x={0} y={0} width={WITH < HEIGHT ? HEIGHT : WITH } height={HEIGHT > WITH ? WITH : HEIGHT} />   
-                        <TitleIcon title={title} icons={icons} touch={touch} positionTouch={positionTouch} />
-                    </Canvas>
-                    {/* <View style={{position:'absolute', flex:1}}>
 
-                    </View> */}
-                    
-                </GestureDetector>
-            </GestureHandlerRootView>
+            <GestureDetector gesture={gesture}>
+            <Canvas style={styles.container} onTouch={touchHandler} >
+                <Image image={background} fit={'fill'} x={0} y={0} width={WITH < HEIGHT ? HEIGHT : WITH} height={HEIGHT > WITH ? WITH : HEIGHT} />
+                <Image image={picture} fit={'fill'} x={300} y={100} width={400} height={250} />
+            </Canvas>
+            </GestureDetector>
+                <View style={styles.roundTitle}>
+                    <View style={styles.title}>
+                        <TitleIcon title={title} icons={icons} />
+                    </View>
+                </View>
+
         </SafeAreaView>
     );
 }
@@ -69,54 +70,17 @@ const styles = StyleSheet.create({
     container: {
         flex: 1
     },
+    roundTitle: {
+        position: 'absolute', 
+        paddingHorizontal: 50, 
+        width: WITH < HEIGHT ? HEIGHT : WITH 
+    },
+    title: {
+        flexDirection: 'row', 
+        flexWrap: 'wrap', 
+        alignItems: 'center', 
+        justifyContent: 'center'
+    }
 })
 
 export default PageIcon;
-
-// import { useEffect, useState } from "react";
-// import { Canvas, Circle, Group, useTouchHandler } from "@shopify/react-native-skia";
-// import {
-//     useDerivedValue,
-//     useSharedValue,
-//     withRepeat,
-//     withTiming,
-// } from "react-native-reanimated";
-
-
-// function PageIcon() {
-//     const size = 256;
-//     const r = useSharedValue(0);
-//     const c = useDerivedValue(() => size - r.value);
-//     const [touch, setTouch] = useState(false)
-//     const touchHandler = useTouchHandler({
-//         onStart: ({ x, y }) => {
-//             setTouch(!touch)
-//             // setPositionTouch({ x, y });
-//             console.log('touch')
-//         },
-//         onEnd: ({ x, y }) => {
-//             // setTouch(false)
-//             // setPositionTouch();
-//         }
-//     })
-
-//     useEffect(() => {
-//         r.value = withTiming(size * 0.33, { duration: 1000 });
-//       }, [r, size, touch]);
-//     return (
-//         <Canvas style={{ flex: 1 }} onTouch={touchHandler}>
-//             <Group blendMode="multiply">
-//                 <Circle cx={r} cy={r} r={r} color="cyan" />
-//                 <Circle cx={c} cy={r} r={r} color="magenta" />
-//                 <Circle
-//                     cx={size / 2}
-//                     cy={c}
-//                     r={r}
-//                     color="yellow"
-//                 />
-//             </Group>
-//         </Canvas>
-//     );
-// };
-
-// export default PageIcon;

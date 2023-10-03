@@ -334,7 +334,7 @@ export default DataStoryIcon = {
                         }
                     }
                 },
-               
+
             ],
             "has_text_config": [
                 {
@@ -539,17 +539,15 @@ export default DataStoryIcon = {
                 }
             ],
             "has_picture": [
-                 // ảnh trên nền
-                 {
+                // ảnh trên nền
+                {
                     "id": 2,
                     "page_id": 2,
-                    "data": {
-                        "boundingbox": "{{1032,-3},{643,590}}",
-                    },
+                    "boundingbox": { "x": 200, "y": 100, "with": 200, "height": 100 },
                     "picture": "https://res.cloudinary.com/dmrsdkvzl/image/upload/v1695874298/StoryIcon/background/25bba7b4d6d4126a4bd8d6a98974b4bc_d5tyky.png",
                 },
             ]
         },
-       
+
     ]
 }
