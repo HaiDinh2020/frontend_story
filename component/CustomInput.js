@@ -20,8 +20,8 @@ function CustomInput({control, name, rules = {}, placeholder, secureTextEntry}) 
                             secureTextEntry={secureTextEntry}
                             style={styles.input}
                         />
-                    </View>
                     {error && <Text style={styles.error}>{error.message || "Error"}</Text>}
+                    </View>
                 </>
             )}
             name={name}
@@ -32,20 +32,20 @@ function CustomInput({control, name, rules = {}, placeholder, secureTextEntry}) 
 
 const styles = StyleSheet.create({
     container: {
-       
-        borderColor:'red',
-        width:"50%"
+        flex:1,
+        margin:10
     },
     error: {
         color:'red',
         alignSelf:'stretch'
     },
     input: {
-        color:'#d8d8d8',
-        fontSize:32,
-        fontWeight:'bold',
+        color:'black',
+        fontSize:14,
+        // fontWeight:'bold',
         borderColor:'black',
-        borderWidth:3
+        borderWidth:1,
+        borderRadius:20
     }
 })
 

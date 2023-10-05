@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native'
-import Animated, {  useAnimatedStyle,  useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withSequence, withSpring, withTiming } from 'react-native-reanimated';
 import { StyleSheet } from 'react-native';
 import Sound from 'react-native-sound';
 
@@ -37,23 +37,25 @@ function IconImage({ icon, indexIcon, indexTime, timeIcon }) {
                 audio.play();
             },
         );
+        return audio;
     }
 
-
+    const [sound, setSound] = useState()
     const [touch, setTouch] = useState(false);
 
     const handleTouch = () => {
-        console.log('touch')
+        if(sound) {
+            sound.release();
+        }
+        setSound(playSound(icon.belong_text.has_audio.audio))
         if (!touch) {
-            iconSizeWith.value = withTiming(iconSizeWith.value / 1.5, { duration: 1000 })
-            iconSizeHeight.value = withTiming(iconSizeHeight.value / 1.5, { duration: 1000 })
-            iconNameOpacity.value = withTiming(1, { duration: 1000 });
-            playSound(icon.belong_text.has_audio.audio);
+            iconSizeWith.value = withSpring(iconSizeWith.value / 1.5)
+            iconSizeHeight.value = withSpring(iconSizeHeight.value / 1.5)
+            iconNameOpacity.value = withSpring(1);
         } else {
-            iconSizeWith.value = withTiming(iconSizeWith.value * 1.5, { duration: 1000 })
-            iconSizeHeight.value = withTiming(iconSizeHeight.value * 1.5, { duration: 1000 })
-            iconNameOpacity.value = withTiming(0, { duration: 1000 });
-            playSound(icon.belong_text.has_audio.audio);
+            iconSizeWith.value = withSpring(rectWith)
+            iconSizeHeight.value = withSpring(rectHeight)
+            iconNameOpacity.value = withSpring(0);
         }
         setTouch(!touch);
     }
@@ -74,7 +76,7 @@ function IconImage({ icon, indexIcon, indexTime, timeIcon }) {
 
 
     return (
-        <View style={[{ width: rectWith, height: rectHeight}, styles.container]} >
+        <View style={[{ width: rectWith, height: rectHeight }, styles.container]} >
             <Animated.View style={styleIcon} onTouchStart={handleTouch}>
                 <Animated.Image source={{ uri: icon.belong_text.has_icon.icon }} style={styles.image} />
             </Animated.View>
@@ -85,13 +87,13 @@ function IconImage({ icon, indexIcon, indexTime, timeIcon }) {
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: 'center', 
-        justifyContent: 'center', 
+        alignItems: 'center',
+        justifyContent: 'center',
         position: 'relative'
     },
     image: {
-        width: '100%', 
-        height: '100%', 
+        width: '100%',
+        height: '100%',
         resizeMode: 'contain'
     },
     text: {

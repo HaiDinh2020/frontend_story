@@ -3,7 +3,7 @@ import IconImage from "./IconImage";
 import Word from "./Word";
 import Sound from "react-native-sound";
 
-const TitleIcon = ({ title, icons }) => {
+const TitleIcon = ({ title, icons, isFling }) => {
 
 
     const titleIcon = title?.belong_text.sync_data;
@@ -27,25 +27,7 @@ const TitleIcon = ({ title, icons }) => {
 
         return isIcon ? icon : false;
     }
-    let [loadSuccess, setLoadSuccess] = useState(false);
-
-    // const playSound = (sound) => {
-    //     var audio = new Sound(
-    //         sound,
-    //         null,
-    //         error => {
-    //             if (error) {
-    //                 console.log('failed to load the sound', error);
-    //                 return;
-    //             }
-    //             // if loaded successfully
-    //             setLoadSuccess(true)
-    //             audio.play();
-
-    //         },
-    //     );
-    // }
-
+    const [loadSuccess, setLoadSuccess] = useState(false);
     const [indexTime, setIndexTime] = useState(0);
 
     let currentTime = 0;
@@ -65,19 +47,19 @@ const TitleIcon = ({ title, icons }) => {
                 audio.play();
             },
         );
-    }, [])
+        return () => {
+            setLoadSuccess(false);
+            audio.release();
+            setIndexTime(-1);
+        }
+    }, [isFling])
 
     useEffect(() => {
         if (loadSuccess) {
-            const d = new Date();
-            const t = d.getTime();
-            console.log(t)
-            let id = setInterval(() => {
+            var id = setInterval(() => {
                 currentTime += 50;
-                console.log(currentTime)
                 titleIcon.map((item, index) => {
                     if (item.s <= currentTime && item.e >= currentTime) {
-                        // console.log(item.s, currentTime, item.e, item.w)
                         setIndexTime(index)
                     }
                 })
@@ -85,11 +67,15 @@ const TitleIcon = ({ title, icons }) => {
                     clearInterval(id);
                     setIndexTime(-1);
                     // setLoadSuccess(false);
-                    const d = new Date();
-                    const e = d.getTime();
-                    console.log('end', e, e - t)
+                    // const d = new Date();
+                    // const e = d.getTime();
+                    // console.log('end', e, e - t)
                 }
             }, 50)
+        }
+        return() => {
+            setIndexTime(-1)
+            clearInterval(id);
         }
     }, [loadSuccess])
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import 'react-native-reanimated'
 import { Text, View } from 'react-native';
 import Login from './screens/Login';
 import { NavigationContainer } from '@react-navigation/native';
@@ -9,6 +10,7 @@ import UITab from './navigation/UITab';
 import { CreateText, Menu, Page, PageIcon, Pages, Register, StoryIcon } from './screens';
 import InputText from './component/InputText';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import ListPage from './screens/storyIcon/ListPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +37,7 @@ export default function App() {
             <Stack.Screen options={{ headerShown: false, orientation: 'portrait' }} name="CreateText" component={CreateText} />
             <Stack.Screen options={{ headerShown: false, orientation: 'landscape' }} name="StoryIcon" component={StoryIcon} />
             <Stack.Screen options={{ headerShown: false, orientation: 'landscape' }} name="PageIcon" component={PageIcon} />
+            <Stack.Screen options={{ headerShown: false, orientation: 'landscape' }} name="ListPage" component={ListPage} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

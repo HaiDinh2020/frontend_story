@@ -70,7 +70,7 @@ function Login({ navigation }) {
         style={styles.container}
       >
         <View style={{
-          flex: 30,
+          flex: 20,
           width: '100%'
         }}></View>
 
@@ -96,7 +96,6 @@ function Login({ navigation }) {
               borderRadius: 20,
               backgroundColor: 'white',
               justifyContent: 'center',
-              marginBottom: 15
             }}
               placeholder='Email'
               onChangeText={(text) => {
@@ -110,11 +109,9 @@ function Login({ navigation }) {
               borderRadius: 20,
               backgroundColor: 'white',
               justifyContent: 'center',
-              marginBottom: 15
             }}
               secureTextEntry={true}
               placeholder='Password'
-              placeholderTextColor='black'
               onChangeText={(text) => {
                 setErrorPassword(isValidPassword(text) == true ? " " : "Password have more 6 character")
                 setPassword(text)
