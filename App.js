@@ -10,7 +10,7 @@ import UITab from './navigation/UITab';
 import { CreateText, Menu, Page, PageIcon, Pages, Register, StoryIcon } from './screens';
 import InputText from './component/InputText';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import ListPage from './screens/storyIcon/ListPage';
+import GestureHandlerPage from './screens/storyIcon/GestureHandlerPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,7 +37,7 @@ export default function App() {
             <Stack.Screen options={{ headerShown: false, orientation: 'portrait' }} name="CreateText" component={CreateText} />
             <Stack.Screen options={{ headerShown: false, orientation: 'landscape' }} name="StoryIcon" component={StoryIcon} />
             <Stack.Screen options={{ headerShown: false, orientation: 'landscape' }} name="PageIcon" component={PageIcon} />
-            <Stack.Screen options={{ headerShown: false, orientation: 'landscape' }} name="ListPage" component={ListPage} />
+            <Stack.Screen options={{ headerShown: false, orientation: 'landscape' }} name="GestureHandlerPage" component={GestureHandlerPage} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

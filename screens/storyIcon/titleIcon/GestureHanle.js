@@ -25,17 +25,13 @@ function GestureHanle(props) {
     }
 
     const gesture = Gesture.Pan()
-        .onTouchesDown((e) => {
+        .onEnd((e) => {
 
             console.log('ges demo')
             // width.value = withTiming(width.value*scale, {duration: 500})
             // height.value = withTiming(height.value*scale, {duration: 500})
             // imageSize.value = withTiming(imageSize.value/1.5, { duration: 500 });
-            // setState();
-
-        })
-        .onTouchesUp((e) => {
-            console.log('canlse')
+            setState();
 
         })
 

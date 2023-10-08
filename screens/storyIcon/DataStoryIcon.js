@@ -332,9 +332,7 @@ export default DataStoryIcon = {
                     "data": {
                         "image_width": 100,
                         "image_height": 100,
-                        "position_num": [
-                            1
-                        ]
+                        "vertices": []
                     },
                     "text_id": 1,
                     "belong_text": {
@@ -359,9 +357,7 @@ export default DataStoryIcon = {
                     "data": {
                         "image_width": 70,
                         "image_height": 70,
-                        "position_num": [
-                            1
-                        ],
+                        "vertices": [],
                     },
                     "text_id": 1,
                     "belong_text": {
@@ -386,9 +382,7 @@ export default DataStoryIcon = {
                     "data": {
                         "image_width": 70,
                         "image_height": 70,
-                        "position_num": [
-                            2
-                        ],
+                        "vertices": [],
                     },
                     "text_id": 1,
                     "belong_text": {
@@ -413,9 +407,7 @@ export default DataStoryIcon = {
                     "data": {
                         "image_width": 100,
                         "image_height": 100,
-                        "position_num": [
-                            2
-                        ]
+                        "vertices": [],
                     },
                     "text_id": 1,
                     "belong_text": {
@@ -440,9 +432,7 @@ export default DataStoryIcon = {
                     "data": {
                         "image_width": 50,
                         "image_height": 50,
-                        "position_num": [
-                            1
-                        ],
+                        "vertices": [],
                     },
                     "text_id": 1,
                     "belong_text": {
@@ -467,9 +457,7 @@ export default DataStoryIcon = {
                     "data": {
                         "image_width": 50,
                         "image_height": 50,
-                        "position_num": [
-                            1
-                        ],
+                        "vertices": [],
                     },
                     "text_id": 1,
                     "belong_text": {
@@ -494,9 +482,7 @@ export default DataStoryIcon = {
                     "data": {
                         "image_width": 60,
                         "image_height": 60,
-                        "position_num": [
-                            1
-                        ],
+                        "vertices": [],
                     },
                     "text_id": 1,
                     "belong_text": {
@@ -741,9 +727,7 @@ export default DataStoryIcon = {
                     "data": {
                         "image_width": 100,
                         "image_height": 100,
-                        "position_num": [
-                          1
-                        ]
+                        "vertices": [],
                     },
                     "text_id": 1,
                     "belong_text": {
@@ -768,9 +752,7 @@ export default DataStoryIcon = {
                     "data": {
                         "image_width": 70,
                         "image_height": 70,
-                        "position_num": [
-                            1
-                        ],
+                        "vertices": [],
                     },
                     "text_id": 1,
                     "belong_text": {
@@ -822,9 +804,7 @@ export default DataStoryIcon = {
                     "data": {
                         "image_width": 100,
                         "image_height": 100,
-                        "position_num": [
-                            2
-                        ]
+                        "vertices": [],
                     },
                     "text_id": 1,
                     "belong_text": {
@@ -849,9 +829,7 @@ export default DataStoryIcon = {
                     "data": {
                         "image_width": 50,
                         "image_height": 50,
-                        "position_num": [
-                            1
-                        ],
+                        "vertices": [],
                     },
                     "text_id": 1,
                     "belong_text": {
@@ -876,9 +854,7 @@ export default DataStoryIcon = {
                     "data": {
                         "image_width": 50,
                         "image_height": 50,
-                        "position_num": [
-                            1
-                        ],
+                        "vertices": [],
                     },
                     "text_id": 1,
                     "belong_text": {
@@ -903,9 +879,7 @@ export default DataStoryIcon = {
                     "data": {
                         "image_width": 60,
                         "image_height": 60,
-                        "position_num": [
-                            1
-                        ],
+                        "vertices": [],
                     },
                     "text_id": 1,
                     "belong_text": {

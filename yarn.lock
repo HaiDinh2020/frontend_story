@@ -8311,6 +8311,11 @@ pkg-dir@^4.2.0:
   dependencies:
     find-up "^4.0.0"
 
+point-in-polygon@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/point-in-polygon/-/point-in-polygon-1.1.0.tgz"
+  integrity sha512-3ojrFwjnnw8Q9242TzgXuTD+eKiutbzyslcq1ydfu82Db2y+Ogbmyrkpv0Hgj31qwT3lbS9+QAAO/pIQM35XRw==
+
 postcss-calc@^8.2.4:
   version "8.2.4"
   resolved "https://registry.npmjs.org/postcss-calc/-/postcss-calc-8.2.4.tgz"
@@ -8595,6 +8600,11 @@ react-native-gesture-handler@^2.13.1:
     invariant "^2.2.4"
     lodash "^4.17.21"
     prop-types "^15.7.2"
+
+react-native-linear-gradient@^2.8.3:
+  version "2.8.3"
+  resolved "https://registry.npmjs.org/react-native-linear-gradient/-/react-native-linear-gradient-2.8.3.tgz"
+  integrity sha512-KflAXZcEg54PXkLyflaSZQ3PJp4uC4whM7nT/Uot9m0e/qxFV3p6uor1983D1YOBJbJN7rrWdqIjq0T42jOJyA==
 
 react-native-orientation-locker@^1.5.0:
   version "1.5.0"

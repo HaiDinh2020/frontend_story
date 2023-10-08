@@ -1,14 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button, TouchableOpacity, SafeAreaView, Easing } from 'react-native';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import Animated, { useSharedValue, useAnimatedStyle, withRepeat, withTiming, withSpring } from 'react-native-reanimated';
+import Animated, { useSharedValue, useAnimatedStyle, withRepeat, withTiming, withSpring, useHandler } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/FontAwesome5'
 
 function StoryIcon({ navigation }) {
-    const outRange = 200;
-    const listen = useSharedValue(outRange)
-    const read = useSharedValue(outRange)
-    const learn = useSharedValue(outRange)
+    const outRangeY = 200;
+    const outRangeX = 300;
+    const listen = useSharedValue(outRangeY)
+    const read = useSharedValue(outRangeY)
+    const learn = useSharedValue(outRangeY)
+    const thumbnail = useSharedValue(outRangeX)
+    const storyInfor = useSharedValue(outRangeX)
 
     const animatedListen = useAnimatedStyle(() => ({
         transform: [{ translateY: listen.value }],
@@ -22,15 +25,35 @@ function StoryIcon({ navigation }) {
         transform: [{ translateY: learn.value }],
     }));
 
+    const animatedThumbnail = useAnimatedStyle(() => ({
+        transform: [{ translateX: -thumbnail.value }]
+    }))
+
+    const animatedStoryInfor = useAnimatedStyle(() => ({
+        transform: [{ translateX: storyInfor.value }]
+    }))
+
 
     useEffect(() => {
-        listen.value = withTiming(listen.value - outRange, { duration: 1500 })
-        read.value = withTiming(read.value - outRange, {duration: 2000})
-        learn.value = withTiming(learn.value - outRange, {duration: 2500})
+        listen.value = withTiming(listen.value - outRangeY, { duration: 1500 })
+        read.value = withTiming(read.value - outRangeY, { duration: 2000 })
+        learn.value = withTiming(learn.value - outRangeY, { duration: 2500 })
+        thumbnail.value = withTiming(thumbnail.value - outRangeX, { duration: 2500 })
+        storyInfor.value = withTiming(storyInfor.value - outRangeX, { duration: 2500 })
+        return () => {
+            console.log('come back')
+        }
     }, [])
 
     const listenStory = () => {
-        navigation.navigate('PageIcon')
+        // listen.value = withTiming(listen.value + outRangeY, { duration: 500 })
+        // read.value = withTiming(read.value + outRangeY, { duration: 1000 })
+        // learn.value = withTiming(learn.value + outRangeY, { duration: 1500 })
+        // thumbnail.value = withTiming(thumbnail.value + outRangeX, { duration: 1500 })
+        // storyInfor.value = withTiming(storyInfor.value + outRangeX, { duration: 1500 })
+        // setTimeout(() => {
+        // }, 500)
+        navigation.navigate('GestureHandlerPage')
     }
 
 
@@ -46,7 +69,7 @@ function StoryIcon({ navigation }) {
                 <Icon name='heart' size={20} />
             </View>
             <View style={styles.content}>
-                <View style={styles.thumbnail} >
+                <Animated.View style={[styles.thumbnail, animatedThumbnail]} >
                     <Image
                         style={styles.image}
                         source={{
@@ -54,23 +77,26 @@ function StoryIcon({ navigation }) {
                         }}
 
                     />
-                </View>
+                </Animated.View>
                 <View style={styles.storyInfor}>
-                    <View style={styles.title}>
-                        <Text style={styles.name}>Danger in the Jungle</Text>
-                    </View>
-                    <View style={styles.infor}>
-                        <View style={styles.inforDetail}>
+                    <Animated.View style={[{flex:5},animatedStoryInfor]}>
 
-                            <Text style={styles.item}>Tác giả: </Text>
-                            <Text>Mary Blake</Text>
+                        <View style={styles.title}>
+                            <Text style={styles.name}>Danger in the Jungle</Text>
                         </View>
-                        <View style={styles.inforDetail}>
+                        <View style={styles.infor}>
+                            <View style={styles.inforDetail}>
 
-                            <Text style={styles.item}>Minh họa:</Text>
-                            <Text> Link lee</Text>
+                                <Text style={styles.item}>Tác giả: </Text>
+                                <Text>Mary Blake</Text>
+                            </View>
+                            <View style={styles.inforDetail}>
+
+                                <Text style={styles.item}>Minh họa:</Text>
+                                <Text> Link lee</Text>
+                            </View>
                         </View>
-                    </View>
+                    </Animated.View>
                     <View style={styles.option}>
                         <Animated.View style={[styles.touchableOpacity, animatedListen]} >
                             <TouchableOpacity onPress={listenStory}>
@@ -145,10 +171,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     inforDetail: {
-        paddingRight:20
+        paddingRight: 20
     },
     item: {
-        color:'lightblue'
+        color: 'lightblue'
     },
     option: {
         flex: 5,
