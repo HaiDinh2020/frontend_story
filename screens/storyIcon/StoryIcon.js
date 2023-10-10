@@ -40,9 +40,6 @@ function StoryIcon({ navigation }) {
         learn.value = withTiming(learn.value - outRangeY, { duration: 2500 })
         thumbnail.value = withTiming(thumbnail.value - outRangeX, { duration: 2500 })
         storyInfor.value = withTiming(storyInfor.value - outRangeX, { duration: 2500 })
-        return () => {
-            console.log('come back')
-        }
     }, [])
 
     const listenStory = () => {

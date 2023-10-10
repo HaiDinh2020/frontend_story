@@ -1,14 +1,14 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { StyleSheet, SafeAreaView, Dimensions } from 'react-native'
 import DataStoryIcon from './DataStoryIcon';
-import { Canvas, Rect, useFont, Image, useImage, useTouchHandler, useValue, Path, Skia, vec } from '@shopify/react-native-skia';
-import { GestureDetector, Gesture, GestureHandlerRootView, Directions, FlingGestureHandler, PanGestureHandler } from "react-native-gesture-handler";
+import { useValue } from '@shopify/react-native-skia';
+import { GestureDetector, Gesture, GestureHandlerRootView, Directions } from "react-native-gesture-handler";
 import TitleIcon from './titleIcon/TitleIcon';
 import Animated, { Easing, runOnJS, runOnUI, useAnimatedGestureHandler, useAnimatedStyle, useDerivedValue, useSharedValue, withDelay, withTiming } from 'react-native-reanimated';
 import { View } from 'react-native';
-import { HEIGHT, WITH } from '../../constants';
 import LinearGradient from 'react-native-linear-gradient';
 import PageIcon from './PageIcon';
+import Choices from './Choices';
 
 
 function GestureHandlerPage({ }) {
@@ -16,7 +16,7 @@ function GestureHandlerPage({ }) {
 
     const pagesIcon = DataStoryIcon.has_page;
     const [page, setPage] = useState(pagesIcon[0])
-    
+
     const [isFling, setIsFling] = useState(false)
     const [isTouch, setIsTouch] = useState(false)
     const cx = useValue(100);
@@ -26,12 +26,11 @@ function GestureHandlerPage({ }) {
 
     const cornorWith = useSharedValue(0);
     const cornorHeight = useSharedValue(0);
-
     const cornorWithLeft = useSharedValue(0);
     const cornorHeightLeft = useSharedValue(0);
 
     const reloadPage = () => {
-        console.log('reload page')
+        // console.log('reload page')
         setIsFling(!isFling);
     }
 
@@ -88,14 +87,36 @@ function GestureHandlerPage({ }) {
             }
         })
 
-
-
     const gesture = Gesture.Simultaneous(prePageGesture, nextPageGesture, reloadPageGesture, touchGesture)
 
     setTimeout(() => {
         setIsTouch(false)
     }, 1000)
 
+    const setIndexPage = (index) => {
+        setCurrentPage(index)
+    }
+    const [autoLoad, setAutoLoad] = useState();
+    const autoNextPage = () => {
+            let i = currentPage;
+            setCurrentPage(++i);
+            setAutoLoad(setInterval(() => {
+                cornorWith.value = withTiming(width, { duration: 300 });
+                cornorHeight.value = withTiming(height, { duration: 300 });
+                setCurrentPage(++i);
+                console.log("i", i)
+                if(i > 4) {
+                    cancleAutoNextPage()
+                }
+            }, 8000))
+    }
+
+    const cancleAutoNextPage = () => {
+        if(autoLoad) {
+            console.log('clear auto')
+            clearInterval(autoLoad)
+        }
+    }
     useEffect(() => {
         setTimeout(() => {
             cornorWith.value = 0;
@@ -121,6 +142,7 @@ function GestureHandlerPage({ }) {
                     </Animated.View>
                     <Animated.View style={[styles.cornor, cornorLeftStyle]} >
                     </Animated.View>
+                    <Choices setIndexPage={setIndexPage} currentPage={currentPage} autoNextPage={autoNextPage} cancleAutoNextPage={cancleAutoNextPage}/>
                 </Animated.View>
             </GestureDetector>
         </SafeAreaView>

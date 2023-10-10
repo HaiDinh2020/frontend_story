@@ -4,9 +4,12 @@ import { Canvas, Rect, useFont, Image, useImage, useTouchHandler, useValue, Path
 import TitleIcon from './titleIcon/TitleIcon';
 import { View } from 'react-native';
 import TouchIcon from './TouchIcon';
+import { HEIGHT, WITH } from '../../constants';
+import { Text } from 'react-native';
 
 
 function PageIcon({ page, cx, cy, isTouch, isFling }) {
+
     const { width, height } = Dimensions.get('screen')
 
     const background = useImage(page.background);
@@ -27,6 +30,7 @@ function PageIcon({ page, cx, cy, isTouch, isFling }) {
             </Canvas>
             <View style={styles.roundTitle}>
                 <View style={styles.title}>
+                    <Text>{page.id}</Text>
                     <TitleIcon title={title} icons={icons} isFling={isFling} />
                 </View>
             </View>
@@ -43,7 +47,7 @@ const styles = StyleSheet.create({
     roundTitle: {
         position: 'absolute',
         paddingHorizontal: 50,
-        width: Dimensions.get('screen').width
+        width: WITH > HEIGHT ? WITH : HEIGHT
     },
     title: {
         flexDirection: 'row',
