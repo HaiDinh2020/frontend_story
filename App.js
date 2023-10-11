@@ -11,6 +11,7 @@ import { CreateText, Menu, Page, PageIcon, Pages, Register, StoryIcon } from './
 import InputText from './component/InputText';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import GestureHandlerPage from './screens/storyIcon/GestureHandlerPage';
+import EndGame from './screens/storyIcon/endGame/EndGame';
 
 const Stack = createNativeStackNavigator();
 
@@ -38,6 +39,7 @@ export default function App() {
             <Stack.Screen options={{ headerShown: false, orientation: 'landscape' }} name="StoryIcon" component={StoryIcon} />
             <Stack.Screen options={{ headerShown: false, orientation: 'landscape' }} name="PageIcon" component={PageIcon} />
             <Stack.Screen options={{ headerShown: false, orientation: 'landscape' }} name="GestureHandlerPage" component={GestureHandlerPage} />
+            <Stack.Screen options={{ headerShown: false, orientation: 'landscape' }} name="EndGame" component={EndGame} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

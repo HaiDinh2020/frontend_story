@@ -7,8 +7,8 @@ import Sound from 'react-native-sound';
 
 function IconImage({ icon, indexIcon, indexTime, timeIcon }) {
 
-    const rectWith = icon.data.image_width;
-    const rectHeight = icon.data.image_height
+    const rectWith = JSON.parse(icon.data).image_width/1.5;
+    const rectHeight = JSON.parse(icon.data).image_height/1.5;
 
     const iconSizeWith = useSharedValue(rectWith);
     const iconSizeHeight = useSharedValue(rectHeight);
@@ -89,7 +89,8 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         justifyContent: 'center',
-        position: 'relative'
+        position: 'relative',
+        marginVertical:10,
     },
     image: {
         width: '100%',

@@ -6,6 +6,7 @@ import { View } from 'react-native';
 import TouchIcon from './TouchIcon';
 import { HEIGHT, WITH } from '../../constants';
 import { Text } from 'react-native';
+import Pictures from './Pictures';
 
 
 function PageIcon({ page, cx, cy, isTouch, isFling }) {
@@ -17,20 +18,20 @@ function PageIcon({ page, cx, cy, isTouch, isFling }) {
     const title = text_config[0]
     const icons = page.has_touch
     const touches = page.has_touch
-    // const picture = useImage(page.has_picture[0].picture)
+    const picture = page.has_picture
+    const boundingbox = title.position.split(",").map((item, index) => Number(item.match(/[0-9]+/g)))
 
     return (
         <SafeAreaView style={styles.container}>
             <Canvas style={styles.container} >
                 <Image image={background} fit={'fill'} x={0} y={0} width={width} height={height} />
-                {/* <Image image={picture} fit={'cover'} x={300} y={200} width={200} height={150} /> */}
+                <Pictures pictures={picture} />
                 {
                     isTouch && <TouchIcon position={{ cx, cy }} touches={touches} isTouch={isTouch} />
                 }
             </Canvas>
             <View style={styles.roundTitle}>
                 <View style={styles.title}>
-                    <Text>{page.id}</Text>
                     <TitleIcon title={title} icons={icons} isFling={isFling} />
                 </View>
             </View>
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
     },
     roundTitle: {
         position: 'absolute',
-        paddingHorizontal: 50,
+        paddingHorizontal: 120,
         width: WITH > HEIGHT ? WITH : HEIGHT
     },
     title: {

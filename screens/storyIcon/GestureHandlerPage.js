@@ -9,12 +9,13 @@ import { View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import PageIcon from './PageIcon';
 import Choices from './Choices';
+import { useNavigation } from '@react-navigation/native';
 
-
-function GestureHandlerPage({ }) {
+function GestureHandlerPage(props) {
     const { width, height } = Dimensions.get('screen')
+    const navigation = useNavigation()
 
-    const pagesIcon = DataStoryIcon.has_page;
+    const pagesIcon = props.route.params.dataPageIcon
     const [page, setPage] = useState(pagesIcon[0])
 
     const [isFling, setIsFling] = useState(false)
@@ -72,17 +73,19 @@ function GestureHandlerPage({ }) {
         .onBegin(() => {
         })
         .onEnd(() => {
-            cornorWith.value = withTiming(width, { duration: 300 });
-            cornorHeight.value = withTiming(height, { duration: 300 });
-            runOnJS(setCurrentPage)(currentPage + 1)
+            if(currentPage < pagesIcon.length-1) {
+                cornorWith.value = withTiming(width, { duration: 200 });
+                cornorHeight.value = withTiming(height, { duration: 200 });
+                runOnJS(setCurrentPage)(currentPage + 1)
+            }
         })
 
     const prePageGesture = Gesture.Fling()
         .direction(Directions.RIGHT)
         .onEnd(() => {
             if (currentPage > 0) {
-                cornorWithLeft.value = withTiming(width, { duration: 300 });
-                cornorHeightLeft.value = withTiming(height, { duration: 300 });
+                cornorWithLeft.value = withTiming(width, { duration: 200 });
+                cornorHeightLeft.value = withTiming(height, { duration: 200 });
                 runOnJS(setCurrentPage)(currentPage - 1)
             }
         })
@@ -101,14 +104,15 @@ function GestureHandlerPage({ }) {
             let i = currentPage;
             setCurrentPage(++i);
             setAutoLoad(setInterval(() => {
-                cornorWith.value = withTiming(width, { duration: 300 });
-                cornorHeight.value = withTiming(height, { duration: 300 });
+                cornorWith.value = withTiming(width, { duration: 200 });
+                cornorHeight.value = withTiming(height, { duration: 200 });
                 setCurrentPage(++i);
                 console.log("i", i)
-                if(i > 4) {
+                if(i > pagesIcon.length-2) {
                     cancleAutoNextPage()
                 }
-            }, 8000))
+            }, 10000))
+
     }
 
     const cancleAutoNextPage = () => {
@@ -126,6 +130,11 @@ function GestureHandlerPage({ }) {
             setPage(pagesIcon[currentPage])
             reloadPage();
         }, 100)
+        if(currentPage ==  pagesIcon.length-2) {
+            setTimeout(() => {
+                navigation.replace("EndGame")
+            }, 7000)
+        }
     }, [currentPage])
 
 

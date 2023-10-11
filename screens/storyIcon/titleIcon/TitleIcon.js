@@ -6,8 +6,8 @@ import Sound from "react-native-sound";
 const TitleIcon = ({ title, icons, isFling }) => {
 
 
-    const titleIcon = title?.belong_text.sync_data;
-
+    const titleIcon = JSON.parse(title?.belong_text.sync_data);
+   
     const checkIconText = (word, textIcon) => {
         const wordInTitle = /^[A-Za-z]+$/.test(word[word.length - 1]) ? word.toLowerCase() : word.toLowerCase().slice(0, textIcon.length);
         return textIcon.toLowerCase() === wordInTitle;
@@ -82,7 +82,7 @@ const TitleIcon = ({ title, icons, isFling }) => {
     return (
         <>
             {
-                titleIcon.map((item, index) => {
+                titleIcon?.map((item, index) => {
                     if (handleIcon(item.w)) {
                         const icon = handleIcon(item.w)
                         return (

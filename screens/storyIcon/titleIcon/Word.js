@@ -14,7 +14,7 @@ const Word = ({ word, indexWord, indexTime }) => {
     }, [indexTime])
 
     return (
-        <Text style={{ color: color }}>{word} </Text>
+        <Text style={{ color: color, textAlign:'center', marginVertical: 20 }}>{word} </Text>
     )
 }
 

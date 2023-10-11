@@ -1,5 +1,5 @@
 
-const ngrokUrl = 'https://e8ef-222-252-17-100.ngrok-free.app/'
+const ngrokUrl = 'https://4a12-42-114-36-114.ngrok-free.app/'
 //adb reverse tcp:8081 tcp:8081
 
 export default {
