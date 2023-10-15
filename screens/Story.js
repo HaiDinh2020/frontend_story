@@ -7,7 +7,6 @@ import { fontSizes, url } from '../constants'
 // import { useSelector, useDispatch } from 'react-redux';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadStory } from '../actions/actions';
-// import OrientationLocker from 'react-native-orientation-locker'
 
 function Story({ navigation }) {
 
@@ -88,7 +87,7 @@ function Story({ navigation }) {
                                 <TouchableOpacity
                                     style={styles.story}
                                     onPress={() =>
-                                        navigation.navigate('StoryDetail', { pages: item.id })
+                                        navigation.navigate('StoryIcon', { pages: item.id })
                                     }
                                 >
                                     <Image
@@ -183,10 +182,11 @@ const styles = StyleSheet.create(
             width: 150,
             height: 180,
             resizeMode: 'cover',
-            marginRight: 15
+            marginRight: 15,
+            borderRadius:10
         },
         storyInfo: {
-            width: 200,
+            width: 180,
             height: '90%',
         },
         storyName: {

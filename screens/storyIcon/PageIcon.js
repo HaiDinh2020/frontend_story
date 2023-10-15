@@ -21,6 +21,21 @@ function PageIcon({ page, cx, cy, isTouch, isFling }) {
     const picture = page.has_picture
     const boundingbox = title.position.split(",").map((item, index) => Number(item.match(/[0-9]+/g)))
 
+    function convertCoordinates(coordinates) {
+        const convertedCoordinates = coordinates?.map((coordinate) => coordinate.slice(1, -1).split(','));
+        return convertedCoordinates?.map((coordinate) => [parseInt(coordinate[0]) / 2.24, height - parseInt(coordinate[1]) / 2.13]);
+    }
+
+    // const path = Skia.Path.Make();
+
+    // const vertices2 = convertCoordinates(JSON.parse(touches[3]?.data).vertices);
+    // // console.log(convertCoordinates(JSON.parse(touches[0].data).vertices))
+    // path.moveTo(100, 50)
+    // vertices2.map((item, index) => {
+    //     console.log(1, item)
+    //     path.lineTo(item[0], item[1])
+    // })
+
     return (
         <SafeAreaView style={styles.container}>
             <Canvas style={styles.container} >
@@ -29,6 +44,10 @@ function PageIcon({ page, cx, cy, isTouch, isFling }) {
                 {
                     isTouch && <TouchIcon position={{ cx, cy }} touches={touches} isTouch={isTouch} />
                 }
+                {/* <Path
+                    path={path}
+                    color="blue"
+                /> */}
             </Canvas>
             <View style={styles.roundTitle}>
                 <View style={styles.title}>

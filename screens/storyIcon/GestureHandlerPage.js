@@ -18,12 +18,13 @@ function GestureHandlerPage(props) {
     const pagesIcon = props.route.params.dataPageIcon
     const [page, setPage] = useState(pagesIcon[0])
 
-    const [isFling, setIsFling] = useState(false)
+    const [isFling, setIsFling] = useState(0)
     const [isTouch, setIsTouch] = useState(false)
     const cx = useValue(100);
     const cy = useValue(100);
 
     const [currentPage, setCurrentPage] = useState(0)
+    const sync_data = page ? JSON.parse(page.has_text_config[0].belong_text.sync_data) : {}
 
     const cornorWith = useSharedValue(0);
     const cornorHeight = useSharedValue(0);
@@ -32,7 +33,7 @@ function GestureHandlerPage(props) {
 
     const reloadPage = () => {
         // console.log('reload page')
-        setIsFling(!isFling);
+        setIsFling(isFling + 1);
     }
 
     const cornorRightStyle = useAnimatedStyle(() => {
@@ -57,9 +58,17 @@ function GestureHandlerPage(props) {
 
     const touchGesture = Gesture.Tap()
         .onBegin((event) => {
-            runOnJS(setIsTouch)(true)
+            console.log(isTouch)
+            if(!isTouch) {
+                runOnJS(setIsTouch)(true)
+
+            }
+            console.log(2, isTouch)
             cx.current = event.x;
             cy.current = event.y
+        })
+        .onEnd(() => {
+            
         })
 
     const reloadPageGesture = Gesture.Fling()
@@ -73,7 +82,7 @@ function GestureHandlerPage(props) {
         .onBegin(() => {
         })
         .onEnd(() => {
-            if(currentPage < pagesIcon.length-1) {
+            if (currentPage < pagesIcon.length - 1) {
                 cornorWith.value = withTiming(width, { duration: 200 });
                 cornorHeight.value = withTiming(height, { duration: 200 });
                 runOnJS(setCurrentPage)(currentPage + 1)
@@ -92,36 +101,39 @@ function GestureHandlerPage(props) {
 
     const gesture = Gesture.Simultaneous(prePageGesture, nextPageGesture, reloadPageGesture, touchGesture)
 
-    setTimeout(() => {
-        setIsTouch(false)
-    }, 1000)
+    //   setTimeout(() => {
+    //     setIsTouch(false)
+    //  }, 1000)
 
     const setIndexPage = (index) => {
         setCurrentPage(index)
     }
     const [autoLoad, setAutoLoad] = useState();
     const autoNextPage = () => {
-            let i = currentPage;
-            setCurrentPage(++i);
-            setAutoLoad(setInterval(() => {
+        var i = currentPage;
+        setCurrentPage(++i);
+        setAutoLoad(() => {
+            var auto = setInterval(() => {
                 cornorWith.value = withTiming(width, { duration: 200 });
                 cornorHeight.value = withTiming(height, { duration: 200 });
                 setCurrentPage(++i);
-                console.log("i", i)
-                if(i > pagesIcon.length-2) {
-                    cancleAutoNextPage()
+                if (i > pagesIcon.length - 2) {
+                    clearInterval(auto)
                 }
-            }, 10000))
+            }, Number(sync_data[sync_data.length - 1].e) + 5000)
+            return auto;
+        })
 
     }
 
     const cancleAutoNextPage = () => {
-        if(autoLoad) {
+        if (autoLoad) {
             console.log('clear auto')
             clearInterval(autoLoad)
         }
     }
     useEffect(() => {
+        console.log('render gesturehandlePage', pagesIcon)
         setTimeout(() => {
             cornorWith.value = 0;
             cornorHeight.value = 0;
@@ -130,10 +142,10 @@ function GestureHandlerPage(props) {
             setPage(pagesIcon[currentPage])
             reloadPage();
         }, 100)
-        if(currentPage ==  pagesIcon.length-2) {
+        if (currentPage == pagesIcon.length - 1) {
             setTimeout(() => {
                 navigation.replace("EndGame")
-            }, 7000)
+            }, Number(sync_data[sync_data.length - 1].e) + 5000)
         }
     }, [currentPage])
 
@@ -151,7 +163,7 @@ function GestureHandlerPage(props) {
                     </Animated.View>
                     <Animated.View style={[styles.cornor, cornorLeftStyle]} >
                     </Animated.View>
-                    <Choices setIndexPage={setIndexPage} currentPage={currentPage} autoNextPage={autoNextPage} cancleAutoNextPage={cancleAutoNextPage}/>
+                    <Choices setIndexPage={setIndexPage} autoNextPage={autoNextPage} cancleAutoNextPage={cancleAutoNextPage} />
                 </Animated.View>
             </GestureDetector>
         </SafeAreaView>

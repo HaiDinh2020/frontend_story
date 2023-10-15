@@ -4,12 +4,15 @@ import { useNavigation } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { HEIGHT, WITH } from '../../constants'
 
-const Option = ({ setIndexPage, currentPage, onPress, autoNextPage, cancleAutoNextPage }) => {
+const Option = ({ setIndexPage, onPress, autoNextPage, cancleAutoNextPage }) => {
 
     const navigation = useNavigation()
 
     const [isAutoLoad, setIsAutoLoad] = useState(false);
     const reloadStory = () => {
+        if(isAutoLoad) {
+            setIsAutoLoad(!isAutoLoad);
+        }
         onPress();
         setIndexPage(0);
         cancleAutoNextPage();
@@ -27,7 +30,7 @@ const Option = ({ setIndexPage, currentPage, onPress, autoNextPage, cancleAutoNe
 
 
     const cancelStory = () => {
-        navigation.navigate('StoryIcon')
+        navigation.navigate('Home')
         cancleAutoNextPage();
     }
 

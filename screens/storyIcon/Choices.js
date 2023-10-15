@@ -5,7 +5,7 @@ import Animated, { useSharedValue, useAnimatedStyle, withRepeat, withTiming, wit
 import { HEIGHT, WITH } from '../../constants'
 import Option from '../../component/Option'
 
-const Choices = ({setIndexPage, currentPage, autoNextPage, cancleAutoNextPage}) => {
+const Choices = ({setIndexPage, autoNextPage, cancleAutoNextPage}) => {
     
     const option = useSharedValue(100)
     const styleOption = useAnimatedStyle(() => ({
@@ -19,7 +19,7 @@ const Choices = ({setIndexPage, currentPage, autoNextPage, cancleAutoNextPage}) 
         <SafeAreaView style={styles.container}>
             <View style={styles.space} />
             <Animated.View style={[styles.option, styleOption]}>
-                <Option setIndexPage={setIndexPage} currentPage={currentPage} onPress={onPress} autoNextPage={autoNextPage} cancleAutoNextPage={cancleAutoNextPage}/>
+                <Option setIndexPage={setIndexPage} onPress={onPress} autoNextPage={autoNextPage} cancleAutoNextPage={cancleAutoNextPage}/>
             </Animated.View>
             <View style={styles.menu}>
                 <View style={styles.menuStyle}>

@@ -1,25 +1,42 @@
-import React from "react";
-import { Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState } from "react";
+import { Dimensions, ImageBackground, StyleSheet, Modal, Text, TouchableOpacity, View, Pressable } from 'react-native';
 import MenuButton from "../component/MenuButton";
+import Icon from 'react-native-vector-icons/AntDesign'
 import { WITH, HEIGHT } from "../constants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-function Menu({navigation}) {
+function Menu({ navigation }) {
 
+    // const [modalVisible, setModalVisible] = useState(false);
 
     const playStory = () => {
         navigation.navigate('Home')
     }
-    
+
     const playStoryIcon = () => {
-        navigation.navigate('StoryIcon')
-    } 
+        navigation.navigate('StoryIcon', { pages: 8 })
+    }
 
     const crud = () => {
         navigation.navigate('CreateText')
     }
 
-    const exit = () => {
-        navigation.navigate('Login')
+    const logout = async () => {
+        try {
+          await AsyncStorage.removeItem('token');
+          await AsyncStorage.removeItem('password');
+          await AsyncStorage.removeItem('email');
+          navigation.navigate('Login');
+          console.log('asyncStorage data đã được xóa thành công');
+        } catch (error) {
+          console.log('Đã xảy ra lỗi khi xóa item:', error);
+        }
+      };
+    
+    {
+
+        
+
     }
 
     return (
@@ -29,13 +46,38 @@ function Menu({navigation}) {
                 resizeMode='cover'
                 style={styles.background}
             >
-                <View style={styles.header} />
+                <View style={styles.header} >
+                    {/* <Modal
+                        visible={modalVisible}
+                        animationType="slide"
+                        transparent={true}
+                        onRequestClose={() => {
+                            setModalVisible(!modalVisible);
+                        }}
+                    >
+                        <View style={styles.viewModal} >
+
+                            <View >
+
+                            </View>
+                        </View>
+                    </Modal> */}
+                    <View style={styles.title}>
+
+                        <Pressable
+                            style={styles.setting}
+                            // onPress={() => setModalVisible(!modalVisible)}
+                            onPress={logout}
+                        >
+                            <Icon name='logout' size={30} color={'#efff42'} />
+                        </Pressable>
+                    </View>
+                </View>
 
                 <View style={styles.option} >
-                    <MenuButton optionText={"Story"} handlePress={playStory}/>
-                    <MenuButton optionText={"Story Icon"} handlePress={playStoryIcon}/>
-                    <MenuButton optionText={"CRUD"} handlePress={crud}/>
-                    {/* <MenuButton optionText={"Exit"} handlePress={exit}/> */}
+                    <MenuButton optionText={"Story"} handlePress={playStory} />
+                    <MenuButton optionText={"Story Icon"} handlePress={playStoryIcon} />
+                    <MenuButton optionText={"CRUD"} handlePress={crud} />
                 </View>
 
                 <View style={styles.footer} />
@@ -54,7 +96,17 @@ const styles = StyleSheet.create({
         height: HEIGHT > WITH ? HEIGHT : WITH,
     },
     header: {
-        flex: 4
+        flex: 4,
+
+    },
+    title: {
+        flex: 0.2,
+        flexDirection: 'row-reverse',
+    },
+    setting: {
+        flex: 0.3,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     footer: {
         flex: 2
@@ -64,7 +116,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    
+    viewModal: {
+        flex: 1, 
+        backgroundColor: 'white', 
+        marginVertical: 70, 
+        marginHorizontal:30, 
+        borderRadius: 20
+    }
 })
 
 export default Menu;

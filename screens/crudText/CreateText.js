@@ -4,12 +4,9 @@ import CustomInput from "../../component/CustomInput";
 import { useForm, Controller } from "react-hook-form";
 import CustomButton from "../../component/CustomButton";
 import axios from "axios";
-import { url } from "../../constants";
+import { HEIGHT, WITH, url } from "../../constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
-const WITH = Dimensions.get('screen').width;
-const HEIGHT = Dimensions.get('screen').height;
 
 const CreateText = () => {
 
@@ -105,8 +102,8 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     background: {
-        width: WITH,
-        height: HEIGHT,
+        width: WITH < HEIGHT ? WITH : HEIGHT,
+        height: HEIGHT > WITH ? HEIGHT : WITH,
     },
     header: {
         flex: 1,
