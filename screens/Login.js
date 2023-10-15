@@ -5,10 +5,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { isValidEmail, isValidPassword } from '../utily/Validate'
 import axios from 'axios';
 import { url, fontSizes } from '../constants';
-import OrientationLocker  from 'react-native-orientation-locker';
 
 function Login({ navigation }) {
-  // OrientationLocker.lockToPortrait();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   // validate email, pasword
@@ -16,11 +15,13 @@ function Login({ navigation }) {
   const [errorPassword, setErrorPassword] = useState('');
   const [keyboardIsShow, setKeyboardIsShow] = useState(false);
 
-  const handleLogin = () => {
+  const handleLogin = (email, password) => {
+    
     if (email.length > 0 && password.length
       && isValidEmail(email) == true
       && isValidPassword(password) == true) {
       // check email, password using axios
+      console.log('login success')
       axios.post(url.login, {
         email: email,
         password: password
@@ -31,7 +32,8 @@ function Login({ navigation }) {
             setErrorPassword('Password is not correct')
           } else {
             console.log(response.data.token)
-            saveToken(response.data.token)
+            saveToken(response.data.token, email, password)
+            navigation.navigate('Menu')
           }
         })
         .catch(function (error) {
@@ -41,18 +43,40 @@ function Login({ navigation }) {
         
       }
       // navigation.navigate('CRUD')
-      navigation.navigate('Menu')
   }
 
-  const saveToken = async (token) => {
+  const checkLoginInfo = async () => {
+    try {
+      const emailStorage = await AsyncStorage.getItem('email');
+      const passwordStorage = await AsyncStorage.getItem('password');
+      // const tokenStorage = await AsyncStorage.getItem('token');
+      if (emailStorage !== null && passwordStorage !== null) {
+        // Thực hiện đăng nhập tự động dựa trên thông tin đã lưu
+        // handleLogin(emailStorage, passwordStorage);
+        navigation.navigate('Menu')
+        
+      } else {
+        console.log("chưa có thông tin đăng nhập");
+      }
+    } catch (error) {
+      console.log('Lỗi khi kiểm tra thông tin đăng nhập: ', error);
+    }
+  }
+
+  const saveToken = async (token, email, password) => {
     try {
       await AsyncStorage.setItem('token', token);
-      console.log('Lưu token thành công.');
+      await AsyncStorage.setItem('email', email);
+      await AsyncStorage.setItem('password', password);
+      console.log('Lưu token, email, password thành công.');
     } catch (error) {
-      console.log('Lưu token thất bại:', error);
+      console.log('Lưu thông tin thất bại:', error);
     }
   };
 
+  useEffect(() => {
+    checkLoginInfo();
+  }, [])
   useEffect(() => {
     Keyboard.addListener('keyboardDidShow', () => {
       setKeyboardIsShow(true);
@@ -149,7 +173,7 @@ function Login({ navigation }) {
                 marginBottom: 5
               }}
               onPress={() => {
-                handleLogin();
+                handleLogin(email, password);
               }}
             >
               <Text style={{
