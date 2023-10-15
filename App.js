@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import 'react-native-reanimated'
 import { Text, View } from 'react-native';
 import Login from './screens/Login';
@@ -12,10 +12,18 @@ import InputText from './component/InputText';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import GestureHandlerPage from './screens/storyIcon/GestureHandlerPage';
 import EndGame from './screens/storyIcon/endGame/EndGame';
+import { GetFCMToke, NotificationListener, requestUserPermission } from './utily/pushNotification';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  
+  useEffect(() => {
+    requestUserPermission();
+    // GetFCMToke()
+    NotificationListener();
+  }, []);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Provider store={store}>

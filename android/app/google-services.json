@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "836345249043",
-    "project_id": "monkeyintern-21ecb",
-    "storage_bucket": "monkeyintern-21ecb.appspot.com"
+    "project_number": "722493881730",
+    "project_id": "pushnotification-684ab",
+    "storage_bucket": "pushnotification-684ab.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:836345249043:android:581a9eea065336f477aee6",
+        "mobilesdk_app_id": "1:722493881730:android:3839fe2eef102bb93e239b",
         "android_client_info": {
           "package_name": "com.frontend_story"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDYFUrX6Z5JCQK8hbnELkl4dYmCa0GlXzo"
+          "current_key": "AIzaSyCy8oIv9ja0XPh3h1O6z4JgY8UttGGKVHY"
         }
       ],
       "services": {

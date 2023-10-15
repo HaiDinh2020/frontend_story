@@ -1,5 +1,3 @@
-
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
 
@@ -14,33 +12,44 @@ async function requestUserPermission() {
   }
 }
 
-function GetFCMToke() {
-    let fcmtoke = AsyncStorage.getItem("fcmtken")
-    if(!fcmtoke) {
-        fcmtoke = messaging().getToken();
+const GetFCMToke = async () => {
+  let fcmtoken = await AsyncStorage.getItem("fcmtoken")
+  console.log('old token', fcmtoken)
+  if (!fcmtoken) {
+    try {
+      const fcmtoken = await messaging().getToken();
+      if (fcmtoken) {
+        console.log('new token', fcmtoken)
+        await AsyncStorage.setItem("fcmtoken", fcmtoken)
+      }
+    } catch (error) {
+      console.log("eror in fcmtoken", error)
     }
+  }
 }
 
 const NotificationListener = () => {
-    messaging().onNotificationOpenedApp(remoteMessage => {
+  messaging().onNotificationOpenedApp(remoteMessage => {
+    console.log(
+      'Notification caused app to open from background state:',
+      remoteMessage,
+    );
+  })
+
+  messaging()
+    .getInitialNotification()
+    .then(remoteMessage => {
+      if (remoteMessage) {
         console.log(
-          'Notification caused app to open from background state:',
-          remoteMessage.notification,
+          'Notification caused app to open from quit state:',
+          remoteMessage,
         );
-      })
-
-      messaging()
-      .getInitialNotification()
-      .then(remoteMessage => {
-        if (remoteMessage) {
-          console.log(
-            'Notification caused app to open from quit state:',
-            remoteMessage.notification,
-          );
-        }
-      })
-
-    messaging().onMessage(async remoteMessage => {
-        console.log("notification on froground state....", remoteMessage)
+      }
     })
+
+  messaging().onMessage(async remoteMessage => {
+    console.log("notification on froground state....", remoteMessage)
+  })
 }
+
+export { requestUserPermission, GetFCMToke, NotificationListener }
