@@ -2,15 +2,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useRef, useState } from 'react';
 import { Button, TouchableOpacity, SafeAreaView, Easing, ActivityIndicator } from 'react-native';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import Animated, { useSharedValue, useAnimatedStyle, withRepeat, withTiming, withSpring, useHandler } from 'react-native-reanimated';
+import Animated, { useSharedValue, useAnimatedStyle, withRepeat, withTiming, withSpring, useHandler, withSequence } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import { url } from '../../constants';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import { useStoryStore } from '../../store/zustandStore';
 
-function StoryIcon({ navigation}) {
-
-    // const navigation = useNavigation()
+function StoryIcon(props) {
+    const pageId = props.route.params.pages
+    const navigation = useNavigation()
     const outRangeY = 200;
     const outRangeX = 300;
     const listen = useSharedValue(outRangeY)
@@ -41,7 +42,7 @@ function StoryIcon({ navigation}) {
 
     const [isLoading, setLoading] = useState(true);
     const [dataPageIcon, setDataPageIcon] = useState();
-
+    const  setTypeStory = useStoryStore((state) => state.setTypeStory)
     const getToken = async () => {
         try {
             const token = await AsyncStorage.getItem('token');
@@ -61,41 +62,74 @@ function StoryIcon({ navigation}) {
                 headers: {
                     Authorization: `Bearer ${baererToken}`,
                 },
-            });
-            setDataPageIcon(response.data);
-            console.log(2, response.data)
+            })
+                .then((response) => {
+                    // console.log('res', response)
+                    if (response.status == 200) {
+                        setDataPageIcon(response.data)
+                        setLoading(false);
+                    } else {
+                        console.log('token had expired')
+                        navigation.navigate('Menu');
+                        setLoading(true);
+                    }
+
+                })
             // dispatch(loadStory(response.data))
         } catch (error) {
             console.error(error);
         } finally {
-            setLoading(false);
+
         }
     }
 
     useEffect(() => {
-        getStoryById(8)
+        getStoryById(pageId)
     }, [])
 
     useEffect(() => {
-        if(!isLoading) {
+        if (!isLoading) {
             listen.value = withTiming(listen.value - outRangeY, { duration: 1500 })
             read.value = withTiming(read.value - outRangeY, { duration: 2000 })
             learn.value = withTiming(learn.value - outRangeY, { duration: 2500 })
             thumbnail.value = withTiming(thumbnail.value - outRangeX, { duration: 2500 })
             storyInfor.value = withTiming(storyInfor.value - outRangeX, { duration: 2500 })
         }
-        
+
     }, [isLoading])
 
     const listenStory = () => {
-        // listen.value = withTiming(listen.value + outRangeY, { duration: 500 })
-        // read.value = withTiming(read.value + outRangeY, { duration: 1000 })
-        // learn.value = withTiming(learn.value + outRangeY, { duration: 1500 })
-        // thumbnail.value = withTiming(thumbnail.value + outRangeX, { duration: 1500 })
-        // storyInfor.value = withTiming(storyInfor.value + outRangeX, { duration: 1500 })
-        // setTimeout(() => {
-        // }, 500)
-        navigation.navigate('GestureHandlerPage', {dataPageIcon: dataPageIcon.has_page})
+
+        listen.value = withSequence(
+            withTiming(listen.value + outRangeY, { duration: 500 }),
+            withSpring(0)
+        )
+        read.value = withSequence(
+            withTiming(read.value + outRangeY, { duration: 1000 }),
+            withSpring(0)
+        )
+        learn.value = withSequence(
+            withTiming(learn.value + outRangeY, { duration: 1500 }),
+            withSpring(0)
+        )
+        
+        thumbnail.value = withSequence(
+            withTiming(thumbnail.value + outRangeX, { duration: 1500 }),
+            withSpring(0)
+        )
+        
+        storyInfor.value = withSequence(
+            withTiming(storyInfor.value + outRangeX, { duration: 1500 }),
+            withSpring(0)
+        )
+        
+        setTimeout(() => {
+        }, 500)
+        // navigation.navigate("EndGame")
+        if(dataPageIcon.has_page.length != 0) {
+            navigation.navigate('GestureHandlerPage', { dataPageIcon: dataPageIcon.has_page })
+        }
+        setTypeStory(dataPageIcon.type)
     }
 
 
@@ -230,13 +264,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+
     },
     touchableOpacity: {
         borderRadius: 50,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'green',
-        marginHorizontal: 5
+        marginHorizontal: 20
     },
     viewIcon: {
         width: 50,
