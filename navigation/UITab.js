@@ -1,7 +1,8 @@
 import React from "react";
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Story, Audio, Profile, Login } from "../screens";
+import { Audio } from "../screens";
+import ListText from "../screens/crudText/ListText";
 
 const screenOptions = ({ route }) => ({
     headerShown: false,
@@ -24,8 +25,8 @@ const screenOptions = ({ route }) => ({
             case 'Audio':
                 iconName = 'file-audio';
                 break;
-            case 'Profile':
-                iconName = 'user-cog';
+            case 'Text':
+                iconName = 'book';
                 break;
             default:
                 break;
@@ -41,9 +42,8 @@ const screenOptions = ({ route }) => ({
 const Tab = createBottomTabNavigator()
 function UITab(props) {
     return <Tab.Navigator screenOptions={screenOptions}>
-        <Tab.Screen name="Story" component={Story} />
         <Tab.Screen name="Audio" component={Audio} />
-        <Tab.Screen name="Profile" component={Profile} />
+        <Tab.Screen name="Text" component={ListText} />
     </Tab.Navigator>
 }
 

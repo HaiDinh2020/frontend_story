@@ -10,11 +10,11 @@ function Menu({ navigation }) {
     // const [modalVisible, setModalVisible] = useState(false);
 
     const playStory = () => {
-        navigation.navigate('Home')
+        navigation.navigate('Story')
     }
 
     const playStoryIcon = () => {
-        navigation.navigate('StoryIcon', { pages: 8 })
+        navigation.navigate('Home')
     }
 
     const crud = () => {
@@ -23,21 +23,16 @@ function Menu({ navigation }) {
 
     const logout = async () => {
         try {
-          await AsyncStorage.removeItem('token');
-          await AsyncStorage.removeItem('password');
-          await AsyncStorage.removeItem('email');
-          navigation.navigate('Login');
-          console.log('asyncStorage data đã được xóa thành công');
+            await AsyncStorage.removeItem('token');
+            await AsyncStorage.removeItem('password');
+            await AsyncStorage.removeItem('email');
+            navigation.navigate('Login');
+            console.log('asyncStorage data đã được xóa thành công');
         } catch (error) {
-          console.log('Đã xảy ra lỗi khi xóa item:', error);
+            console.log('Đã xảy ra lỗi khi xóa item:', error);
         }
-      };
-    
-    {
+    };
 
-        
-
-    }
 
     return (
         <View style={styles.container}>
@@ -76,7 +71,7 @@ function Menu({ navigation }) {
 
                 <View style={styles.option} >
                     <MenuButton optionText={"Story"} handlePress={playStory} />
-                    <MenuButton optionText={"Story Icon"} handlePress={playStoryIcon} />
+                    <MenuButton optionText={"List"} handlePress={playStoryIcon} />
                     <MenuButton optionText={"CRUD"} handlePress={crud} />
                 </View>
 
@@ -117,10 +112,10 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     viewModal: {
-        flex: 1, 
-        backgroundColor: 'white', 
-        marginVertical: 70, 
-        marginHorizontal:30, 
+        flex: 1,
+        backgroundColor: 'white',
+        marginVertical: 70,
+        marginHorizontal: 30,
         borderRadius: 20
     }
 })

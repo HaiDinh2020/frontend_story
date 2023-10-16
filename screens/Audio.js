@@ -71,7 +71,6 @@ function Audio(props) {
             <View style={styles.header}>
                 <Text style={styles.title}>Audio list</Text>
             </View>
-            <Button title="Phát âm thanh"/>
             <View style={styles.content}>
                 <FlatList
                     data={listAudio}
@@ -100,10 +99,13 @@ const styles = StyleSheet.create({
     },
     header: {
         backgroundColor: 'white',
-        height: 40
+        height: 50,
+        justifyContent:'center',
+        alignItems:'center'
     },
     title: {
-        fontSize: fontSizes.h1,
+        fontSize: 24,
+        color:'black',
         fontWeight: 'bold',
         marginStart: 10
     },
