@@ -1,5 +1,5 @@
 
-const ngrokUrl = 'https://e602-42-114-36-114.ngrok-free.app/'
+const ngrokUrl = 'https://114a-42-114-36-114.ngrok-free.app/'
 //adb reverse tcp:8081 tcp:8081
 
 export default {
@@ -9,5 +9,6 @@ export default {
     createText: ngrokUrl + 'api/texts',
     login: ngrokUrl + 'api/login',
     register: ngrokUrl + 'api/register',
-    getAudio: ngrokUrl + 'api/audios'
+    getAudio: ngrokUrl + 'api/audios',
+    getTextList: ngrokUrl + 'api/texts'
 }

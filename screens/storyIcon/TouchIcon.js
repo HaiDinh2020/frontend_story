@@ -1,4 +1,4 @@
-import { Path, Rect, Skia, Text, useFont } from "@shopify/react-native-skia";
+import { Path, Rect, Skia, Text, useFont, useValue } from "@shopify/react-native-skia";
 import { useEffect, useState } from "react";
 import Sound from "react-native-sound";
 import pointInPolygon from 'point-in-polygon'
@@ -6,14 +6,18 @@ import { HEIGHT, WITH } from "../../constants";
 import { Dimensions } from "react-native";
 
 
-function TouchIcon({ position, touches, isTouch }) {
+function TouchIcon({ position, touches, touch }) {
 
     const height = Dimensions.get('screen').height
-    const font = useFont(require("../../asserts/fonts/Nasa21-l23X.ttf"), 32);
+    const font = useFont(require("../../asserts/fonts/Nasa21-l23X.ttf"), 20);
 
     const [touchText, setTouchText] = useState("");
-    const [isSoundPlay, setIsSoundPlay] = useState(false);
-    const [sound, setSound] = useState()
+    // const [sound, setSound] = useState()
+    const [isTouch, setIsTouch] = useState(false)
+    const [touchTimeout, setTouchTimeout] = useState();
+    
+    const xText = useValue(0);
+    const yText = useValue(0);
 
     const playSound = (sound) => {
         const soundPlay = new Sound(`${sound}`, Sound.MAIN_BUNDLE, (error) => {
@@ -22,10 +26,9 @@ function TouchIcon({ position, touches, isTouch }) {
                 return;
             } else {
                 soundPlay.play();
-                setIsSoundPlay(true);
             }
         });
-        return soundPlay;
+        // return soundPlay;
     }
 
     function convertCoordinates(coordinates) {
@@ -39,54 +42,37 @@ function TouchIcon({ position, touches, isTouch }) {
     }
 
 
-
-    const handleTouch = () => {
+    useEffect(() => {
         touches?.map((item, index) => {
             const vertices = convertCoordinates(JSON.parse(item.data).vertices);
             const objectText = item.belong_text.text;
             const x = position.cx.current;
             const y = position.cy.current;
             if (isInArea([x, y], vertices)) {
-                // console.log("positon", position)
-                // console.log('item', item)
-                setSound(playSound(item.belong_text.has_audio.audio))
+                if (touchTimeout) {
+                    clearTimeout(touchTimeout);
+                    setIsTouch(false);
+                }
+                xText.current = x;
+                yText.current = y;
+                playSound(item.belong_text.has_audio.audio)
                 setTouchText(objectText);
+                setIsTouch(true);
+                console.log('touch arre')
+                setTouchTimeout(
+                    setTimeout(() => {
+                        setIsTouch(false);
+                    }, 1000)
+                )
             }
         })
 
-    }
-
-    useEffect(() => {
-        handleTouch();
-        return () => {
-            setTouchText("");
-            if (sound) sound.release();
-        }
-    }, [isTouch])
-
-    // const path = Skia.Path.Make();
-
-
-    // const vertices2 =  convertCoordinates(touches[0]?.data.vertices);;
-    // console.log(JSON.parse(touches[0].data).vertices)
-    // path.moveTo(70, 50)
-    // vertices2.map((item, index) => {
-    //     console.log(1, item)
-    //     // path.lineTo()
-       
-    // })
+    }, [touch])
 
     return (
         <>
-
-            {/* <Path
-                path={path}
-                color="blue"
-            /> */}
             {
-                
-                // <Rect 
-                <Text font={font} text={touchText} color={'blue'} x={position.cx.current} y={position.cy.current} />
+                isTouch && <Text font={font} text={touchText} color={'blue'} x={xText.current+10} y={yText.current+10} />
             }
         </>
 

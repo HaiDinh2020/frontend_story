@@ -9,7 +9,7 @@ import { Text } from 'react-native';
 import Pictures from './Pictures';
 
 
-function PageIcon({ page, cx, cy, isTouch, isFling }) {
+function PageIcon({ page, cx, cy, touch, isFling }) {
 
     const { width, height } = Dimensions.get('screen')
 
@@ -41,9 +41,7 @@ function PageIcon({ page, cx, cy, isTouch, isFling }) {
             <Canvas style={styles.container} >
                 <Image image={background} fit={'fill'} x={0} y={0} width={width} height={height} />
                 <Pictures pictures={picture} />
-                {
-                    isTouch && <TouchIcon position={{ cx, cy }} touches={touches} isTouch={isTouch} />
-                }
+                <TouchIcon position={{ cx, cy }} touches={touches} touch={touch} />
                 {/* <Path
                     path={path}
                     color="blue"
@@ -67,7 +65,7 @@ const styles = StyleSheet.create({
     roundTitle: {
         position: 'absolute',
         paddingHorizontal: 120,
-        width: WITH > HEIGHT ? WITH : HEIGHT
+        width: WITH > HEIGHT ? WITH : HEIGHT,
     },
     title: {
         flexDirection: 'row',

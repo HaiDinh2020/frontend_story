@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { StyleSheet, SafeAreaView, Dimensions } from 'react-native'
+import { StyleSheet, SafeAreaView, Dimensions, Text } from 'react-native'
 import DataStoryIcon from './DataStoryIcon';
 import { useValue } from '@shopify/react-native-skia';
 import { GestureDetector, Gesture, GestureHandlerRootView, Directions } from "react-native-gesture-handler";
 import TitleIcon from './titleIcon/TitleIcon';
-import Animated, { Easing, runOnJS, runOnUI, useAnimatedGestureHandler, useAnimatedStyle, useDerivedValue, useSharedValue, withDelay, withTiming } from 'react-native-reanimated';
+import Animated, { runOnJS,  useAnimatedStyle, useDerivedValue, useSharedValue, withDelay, withTiming } from 'react-native-reanimated';
 import { View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import PageIcon from './PageIcon';
@@ -19,7 +19,7 @@ function GestureHandlerPage(props) {
     const [page, setPage] = useState(pagesIcon[0])
 
     const [isFling, setIsFling] = useState(0)
-    const [isTouch, setIsTouch] = useState(false)
+    const [touch, setTouch] = useState(false)
     const cx = useValue(100);
     const cy = useValue(100);
 
@@ -38,7 +38,7 @@ function GestureHandlerPage(props) {
 
     const cornorRightStyle = useAnimatedStyle(() => {
         return {
-            backgroundColor: 'lightblue',
+            backgroundColor: 'white',
             top: height - cornorHeight.value,
             left: width - cornorWith.value,
             width: cornorWith.value,
@@ -48,7 +48,7 @@ function GestureHandlerPage(props) {
 
     const cornorLeftStyle = useAnimatedStyle(() => {
         return {
-            backgroundColor: '#B5B5B5',
+            backgroundColor: 'white',
             // top:WITH-cornorHeightLeft.value,
             width: cornorWithLeft.value,
             height: height,
@@ -58,17 +58,9 @@ function GestureHandlerPage(props) {
 
     const touchGesture = Gesture.Tap()
         .onBegin((event) => {
-            console.log(isTouch)
-            if(!isTouch) {
-                runOnJS(setIsTouch)(true)
-
-            }
-            console.log(2, isTouch)
+            runOnJS(setTouch)(touch + 1)
             cx.current = event.x;
             cy.current = event.y
-        })
-        .onEnd(() => {
-            
         })
 
     const reloadPageGesture = Gesture.Fling()
@@ -83,8 +75,8 @@ function GestureHandlerPage(props) {
         })
         .onEnd(() => {
             if (currentPage < pagesIcon.length - 1) {
-                cornorWith.value = withTiming(width, { duration: 200 });
-                cornorHeight.value = withTiming(height, { duration: 200 });
+                cornorWith.value = withTiming(width, { duration: 100 });
+                cornorHeight.value = withTiming(height, { duration: 100 });
                 runOnJS(setCurrentPage)(currentPage + 1)
             }
         })
@@ -93,17 +85,13 @@ function GestureHandlerPage(props) {
         .direction(Directions.RIGHT)
         .onEnd(() => {
             if (currentPage > 0) {
-                cornorWithLeft.value = withTiming(width, { duration: 200 });
-                cornorHeightLeft.value = withTiming(height, { duration: 200 });
+                cornorWithLeft.value = withTiming(width, { duration: 100 });
+                cornorHeightLeft.value = withTiming(height, { duration: 100 });
                 runOnJS(setCurrentPage)(currentPage - 1)
             }
         })
 
     const gesture = Gesture.Simultaneous(prePageGesture, nextPageGesture, reloadPageGesture, touchGesture)
-
-    //   setTimeout(() => {
-    //     setIsTouch(false)
-    //  }, 1000)
 
     const setIndexPage = (index) => {
         setCurrentPage(index)
@@ -114,8 +102,8 @@ function GestureHandlerPage(props) {
         setCurrentPage(++i);
         setAutoLoad(() => {
             var auto = setInterval(() => {
-                cornorWith.value = withTiming(width, { duration: 200 });
-                cornorHeight.value = withTiming(height, { duration: 200 });
+                cornorWith.value = withTiming(width, { duration: 100 });
+                cornorHeight.value = withTiming(height, { duration: 100 });
                 setCurrentPage(++i);
                 if (i > pagesIcon.length - 2) {
                     clearInterval(auto)
@@ -141,7 +129,7 @@ function GestureHandlerPage(props) {
             cornorHeightLeft.value = 0;
             setPage(pagesIcon[currentPage])
             reloadPage();
-        }, 100)
+        }, 50)
         if (currentPage == pagesIcon.length - 1) {
             setTimeout(() => {
                 navigation.replace("EndGame")
@@ -156,16 +144,13 @@ function GestureHandlerPage(props) {
 
             <GestureDetector gesture={gesture}>
                 <Animated.View style={styles.container}>
-                    <PageIcon page={page} cx={cx} cy={cy} isTouch={isTouch} isFling={isFling} />
-
-                    <Animated.View style={[styles.cornor, cornorRightStyle]} >
-                        <LinearGradient colors={['black', 'white']} start={{ x: 0, y: 0 }} end={{ x: 0.5, y: 0.5 }} style={{ width: width, height: height }} />
-                    </Animated.View>
+                    <PageIcon page={page} cx={cx} cy={cy} touch={touch} isFling={isFling} />
+                    <Animated.View style={[styles.cornor, cornorRightStyle]} />
                     <Animated.View style={[styles.cornor, cornorLeftStyle]} >
                     </Animated.View>
-                    <Choices setIndexPage={setIndexPage} autoNextPage={autoNextPage} cancleAutoNextPage={cancleAutoNextPage} />
                 </Animated.View>
             </GestureDetector>
+            <Choices setIndexPage={setIndexPage} autoNextPage={autoNextPage} cancleAutoNextPage={cancleAutoNextPage} />
         </SafeAreaView>
     );
 }
