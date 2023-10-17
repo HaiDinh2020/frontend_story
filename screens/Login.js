@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/AntDesign'
-import { Text, View, TextInput, Image, ImageBackground, StyleSheet, TouchableOpacity, Keyboard } from 'react-native';
+import { Text, View, TextInput, Image, ImageBackground, StyleSheet, TouchableOpacity, Keyboard, Modal } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { isValidEmail, isValidPassword } from '../utily/Validate'
 import axios from 'axios';
@@ -16,7 +16,6 @@ function Login({ navigation }) {
   const [keyboardIsShow, setKeyboardIsShow] = useState(false);
 
   const handleLogin = (email, password) => {
-    
     if (email.length > 0 && password.length
       && isValidEmail(email) == true
       && isValidPassword(password) == true) {
@@ -39,10 +38,7 @@ function Login({ navigation }) {
         .catch(function (error) {
           console.log(error);
         });
-        
-        
-      }
-      // navigation.navigate('CRUD')
+    }
   }
 
   const checkLoginInfo = async () => {
@@ -53,8 +49,7 @@ function Login({ navigation }) {
       if (emailStorage !== null && passwordStorage !== null) {
         // Thực hiện đăng nhập tự động dựa trên thông tin đã lưu
         // handleLogin(emailStorage, passwordStorage);
-        navigation.navigate('Menu')
-        
+        navigation.navigate('LoadData')
       } else {
         console.log("chưa có thông tin đăng nhập");
       }
@@ -77,6 +72,7 @@ function Login({ navigation }) {
   useEffect(() => {
     checkLoginInfo();
   }, [])
+
   useEffect(() => {
     Keyboard.addListener('keyboardDidShow', () => {
       setKeyboardIsShow(true);
@@ -191,7 +187,6 @@ function Login({ navigation }) {
           </View>
         }
       </ImageBackground>
-
     </View>
 
   );

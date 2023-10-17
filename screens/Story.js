@@ -1,59 +1,38 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Text, TextInput, View, StyleSheet, FlatList, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import RNFS from 'react-native-fs';
 import { fontSizes, url } from '../constants'
-// import { useSelector, useDispatch } from 'react-redux';
-import { useSelector, useDispatch } from 'react-redux';
-import { loadStory } from '../actions/actions';
 
 function Story({ navigation }) {
 
-    
-    const dispatch = useDispatch();
+
 
     const [isLoading, setLoading] = useState(true);
     const [story, setStory] = useState([]);
 
-    const getToken = async () => {
-        try {
-            const token = await AsyncStorage.getItem('token');
-            // const token = '27|OTDG20Pjf0Y40TWUq56Fq4BWPgOJTr7AKkaZgvRB'
-            console.log('Token:', token);
-            return token;
-        } catch (error) {
-            console.log('Truy xuất token thất bại:', error);
-            return null;
-        }
-    };
-
     const getStories = async () => {
         try {
-            const baererToken = await getToken();
-            const response = await axios.get(url.getStories, {
-                headers: {
-                    Authorization: `Bearer ${baererToken}`,
-                },
-            });
-            setStory(response.data);
-            console.log(1, response.data)
-            // dispatch(loadStory(response.data))
+            const path = RNFS.DocumentDirectoryPath + '/dataListStory.json';
+            RNFS.readFile(path, 'utf8')
+                .then(content => {
+                    // Xử lý dữ liệu ở đây
+                    const data = JSON.parse(content);
+                    setStory(data)
+                    setLoading(false);
+                    console.log('Dữ liệu đã được đọc từ local:', data);
+                })
+                .catch(error => {
+                    setLoading(true);
+                    console.log('Lỗi khi đọc dữ liệu từ local:', error);
+                });
         } catch (error) {
             console.error(error);
         } finally {
             setLoading(false);
         }
     };
-
-    // const getInforStorage = async () => {
-    //     try {
-    //         const infor = await AsyncStorage.getInfor();
-    //         console.log("infor: ", infor);
-    //     } catch (error) {
-    //         console.log("err: ", error)
-    //     }
-    // }
 
     useEffect(() => {
         getStories();
@@ -183,7 +162,7 @@ const styles = StyleSheet.create(
             height: 180,
             resizeMode: 'cover',
             marginRight: 15,
-            borderRadius:10
+            borderRadius: 10
         },
         storyInfo: {
             width: 180,
@@ -223,13 +202,13 @@ const styles = StyleSheet.create(
             borderRadius: 10,
             borderColor: 'black',
             borderWidth: 2,
-            justifyContent:'center',
-            alignItems:'center',
+            justifyContent: 'center',
+            alignItems: 'center',
         },
         plus: {
             fontSize: fontSizes.h1,
             fontWeight: 'bold',
-            color:'black'
+            color: 'black'
         }
     }
 )

@@ -1,12 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { StyleSheet, SafeAreaView, Dimensions, Text } from 'react-native'
-import DataStoryIcon from './DataStoryIcon';
 import { useValue } from '@shopify/react-native-skia';
 import { GestureDetector, Gesture, GestureHandlerRootView, Directions } from "react-native-gesture-handler";
 import TitleIcon from './titleIcon/TitleIcon';
 import Animated, { runOnJS,  useAnimatedStyle, useDerivedValue, useSharedValue, withDelay, withTiming } from 'react-native-reanimated';
 import { View } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import PageIcon from './PageIcon';
 import Choices from './Choices';
 import { useNavigation } from '@react-navigation/native';

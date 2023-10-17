@@ -1,11 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { StyleSheet, SafeAreaView, Dimensions } from 'react-native'
+import { StyleSheet, SafeAreaView, Dimensions, Text, View } from 'react-native'
 import { Canvas, Rect, useFont, Image, useImage, useTouchHandler, useValue, Path, Skia, vec } from '@shopify/react-native-skia';
 import TitleIcon from './titleIcon/TitleIcon';
-import { View } from 'react-native';
 import TouchIcon from './TouchIcon';
 import { HEIGHT, WITH } from '../../constants';
-import { Text } from 'react-native';
 import Pictures from './Pictures';
 
 
@@ -21,10 +19,10 @@ function PageIcon({ page, cx, cy, touch, isFling }) {
     const picture = page.has_picture
     const boundingbox = title.position.split(",").map((item, index) => Number(item.match(/[0-9]+/g)))
 
-    function convertCoordinates(coordinates) {
-        const convertedCoordinates = coordinates?.map((coordinate) => coordinate.slice(1, -1).split(','));
-        return convertedCoordinates?.map((coordinate) => [parseInt(coordinate[0]) / 2.24, height - parseInt(coordinate[1]) / 2.13]);
-    }
+    // function convertCoordinates(coordinates) {
+    //     const convertedCoordinates = coordinates?.map((coordinate) => coordinate.slice(1, -1).split(','));
+    //     return convertedCoordinates?.map((coordinate) => [parseInt(coordinate[0]) / 2.24, height - parseInt(coordinate[1]) / 2.13]);
+    // }
 
     // const path = Skia.Path.Make();
 

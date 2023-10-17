@@ -6,6 +6,7 @@ import Animated, { useSharedValue, useAnimatedStyle, withRepeat, withTiming, wit
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import { url } from '../../constants';
 import axios from 'axios';
+import RNFS from 'react-native-fs';
 import { useNavigation } from '@react-navigation/native';
 import { useStoryStore } from '../../store/zustandStore';
 
@@ -42,44 +43,25 @@ function StoryIcon(props) {
 
     const [isLoading, setLoading] = useState(true);
     const [dataPageIcon, setDataPageIcon] = useState();
-    const  setTypeStory = useStoryStore((state) => state.setTypeStory)
-    const getToken = async () => {
-        try {
-            const token = await AsyncStorage.getItem('token');
-            // const token = '27|OTDG20Pjf0Y40TWUq56Fq4BWPgOJTr7AKkaZgvRB'
-            console.log('Token:', token);
-            return token;
-        } catch (error) {
-            console.log('Truy xuất token thất bại:', error);
-            return null;
-        }
-    };
+    const setTypeStory = useStoryStore((state) => state.setTypeStory)
 
     const getStoryById = async (id) => {
         try {
-            const baererToken = await getToken();
-            const response = await axios.get(`${url.getStories}/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${baererToken}`,
-                },
-            })
-                .then((response) => {
-                    // console.log('res', response)
-                    if (response.status == 200) {
-                        setDataPageIcon(response.data)
-                        setLoading(false);
-                    } else {
-                        console.log('token had expired')
-                        navigation.navigate('Menu');
-                        setLoading(true);
-                    }
-
+            const path = RNFS.DocumentDirectoryPath + `/dataStory${id}.json`;
+            RNFS.readFile(path, 'utf8')
+                .then(content => {
+                    // Xử lý dữ liệu ở đây
+                    const data = JSON.parse(content);
+                    setDataPageIcon(data)
+                    setLoading(false);
+                    console.log('Dữ liệu story id đã được đọc từ local:', data)
                 })
-            // dispatch(loadStory(response.data))
+                .catch(error => {
+                    console.log('Lỗi khi đọc dữ liệu từ local:', error);
+                    setLoading(true);
+                });
         } catch (error) {
             console.error(error);
-        } finally {
-
         }
     }
 
@@ -89,17 +71,16 @@ function StoryIcon(props) {
 
     useEffect(() => {
         if (!isLoading) {
-            listen.value = withTiming(listen.value - outRangeY, { duration: 1500 })
-            read.value = withTiming(read.value - outRangeY, { duration: 2000 })
-            learn.value = withTiming(learn.value - outRangeY, { duration: 2500 })
-            thumbnail.value = withTiming(thumbnail.value - outRangeX, { duration: 2500 })
-            storyInfor.value = withTiming(storyInfor.value - outRangeX, { duration: 2500 })
+            listen.value = withTiming(listen.value - outRangeY, { duration: 500 })
+            read.value = withTiming(read.value - outRangeY, { duration: 1000 })
+            learn.value = withTiming(learn.value - outRangeY, { duration: 1500 })
+            thumbnail.value = withTiming(thumbnail.value - outRangeX, { duration: 1500 })
+            storyInfor.value = withTiming(storyInfor.value - outRangeX, { duration: 1500 })
         }
 
     }, [isLoading])
 
     const listenStory = () => {
-
         listen.value = withSequence(
             withTiming(listen.value + outRangeY, { duration: 500 }),
             withSpring(0)
@@ -112,21 +93,16 @@ function StoryIcon(props) {
             withTiming(learn.value + outRangeY, { duration: 1500 }),
             withSpring(0)
         )
-        
         thumbnail.value = withSequence(
             withTiming(thumbnail.value + outRangeX, { duration: 1500 }),
             withSpring(0)
         )
-        
         storyInfor.value = withSequence(
             withTiming(storyInfor.value + outRangeX, { duration: 1500 }),
             withSpring(0)
         )
-        
-        setTimeout(() => {
-        }, 500)
         // navigation.navigate("EndGame")
-        if(dataPageIcon.has_page.length != 0) {
+        if (dataPageIcon.has_page.length != 0) {
             navigation.navigate('GestureHandlerPage', { dataPageIcon: dataPageIcon.has_page })
         }
         setTypeStory(dataPageIcon.type)
@@ -135,7 +111,7 @@ function StoryIcon(props) {
 
     const goBack = () => {
         console.log('go back')
-        navigation.navigate('Menu');
+        navigation.navigate('Story');
     }
 
     return (

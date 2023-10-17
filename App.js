@@ -13,6 +13,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import GestureHandlerPage from './screens/storyIcon/GestureHandlerPage';
 import EndGame from './screens/storyIcon/endGame/EndGame';
 import { GetFCMToke, NotificationListener, requestUserPermission } from './utily/pushNotification';
+import LoadData from './screens/LoadData';
 
 const Stack = createNativeStackNavigator();
 
@@ -40,6 +41,7 @@ export default function App() {
               options={{ headerShown: false, orientation: 'portrait' }}
             />
             <Stack.Screen options={{ headerShown: false, orientation: 'portrait' }} name="Home" component={UITab} />
+            <Stack.Screen options={{ headerShown: false, orientation: 'portrait' }} name="LoadData" component={LoadData} />
             <Stack.Screen options={{ headerShown: false, orientation: 'portrait' }} name="Story" component={Story} />
             <Stack.Screen options={{ headerShown: false, orientation: 'portrait' }} name='CRUD' component={InputText} />
             <Stack.Screen options={{ headerShown: false, orientation: 'landscape' }} name="StoryDetail" component={Page} />
