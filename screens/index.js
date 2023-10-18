@@ -9,6 +9,9 @@ import Menu from "./Menu";
 import CreateText from "./crudText/CreateText";
 import StoryIcon from "./storyIcon/StoryIcon";
 import PageIcon from "./storyIcon/PageIcon";
+import EndGame from "./storyIcon/endGame/EndGame";
+import LoadData from "./LoadData";
+import GestureHandlerPage from "./storyIcon/GestureHandlerPage";
 
 export {
     Login,
@@ -21,5 +24,8 @@ export {
     Menu,
     CreateText,
     StoryIcon,
-    PageIcon
+    PageIcon,
+    EndGame,
+    LoadData,
+    GestureHandlerPage
 };

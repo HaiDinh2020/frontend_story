@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
+import NavigationServices from '../navigation/NavigationServices';
 
 async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
@@ -30,10 +31,15 @@ const GetFCMToke = async () => {
 
 const NotificationListener = () => {
   messaging().onNotificationOpenedApp(remoteMessage => {
-    console.log(
-      'Notification caused app to open from background state:',
-      remoteMessage,
-    );
+    // console.log(
+    //   'Notification caused app to open from background state:',
+    //   remoteMessage,
+    // );
+
+    if (!!remoteMessage?.data && remoteMessage?.data?.redirect_to == "StoryIcon") {
+      console.log('redirect',remoteMessage?.data)
+      NavigationServices.navigate("StoryIcon", {id: remoteMessage?.data?.id })
+    }
   })
 
   messaging()
@@ -44,6 +50,12 @@ const NotificationListener = () => {
           'Notification caused app to open from quit state:',
           remoteMessage,
         );
+        if (!!remoteMessage?.data && remoteMessage?.data?.redirect_to == "Story") {
+          setTimeout(() => {
+            NavigationServices.navigate("Story")
+            console.log('redirect')
+          }, 12000)
+        }
       }
     })
 

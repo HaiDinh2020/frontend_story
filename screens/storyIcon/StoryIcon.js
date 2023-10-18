@@ -11,7 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useStoryStore } from '../../store/zustandStore';
 
 function StoryIcon(props) {
-    const pageId = props.route.params.pages
+    const pageId = props.route.params.id
     const navigation = useNavigation()
     const outRangeY = 200;
     const outRangeX = 300;
@@ -54,7 +54,7 @@ function StoryIcon(props) {
                     const data = JSON.parse(content);
                     setDataPageIcon(data)
                     setLoading(false);
-                    console.log('Dữ liệu story id đã được đọc từ local:', data)
+                    console.log('Dữ liệu story id đã được đọc từ local:')
                 })
                 .catch(error => {
                     console.log('Lỗi khi đọc dữ liệu từ local:', error);

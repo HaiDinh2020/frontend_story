@@ -4,9 +4,11 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNFS from 'react-native-fs';
 import { fontSizes, url } from '../constants'
+import { useNavigation } from '@react-navigation/native';
 
-function Story({ navigation }) {
+function Story() {
 
+    const navigation = useNavigation()
 
 
     const [isLoading, setLoading] = useState(true);
@@ -21,7 +23,7 @@ function Story({ navigation }) {
                     const data = JSON.parse(content);
                     setStory(data)
                     setLoading(false);
-                    console.log('Dữ liệu đã được đọc từ local:', data);
+                    console.log('Dữ liệu đã được đọc từ local:');
                 })
                 .catch(error => {
                     setLoading(true);
@@ -66,7 +68,7 @@ function Story({ navigation }) {
                                 <TouchableOpacity
                                     style={styles.story}
                                     onPress={() =>
-                                        navigation.navigate('StoryIcon', { pages: item.id })
+                                        navigation.navigate('StoryIcon', { id: item.id })
                                     }
                                 >
                                     <Image
