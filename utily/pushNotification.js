@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import messaging from '@react-native-firebase/messaging';
+import messaging, { firebase } from '@react-native-firebase/messaging';
 import NavigationServices from '../navigation/NavigationServices';
 
 async function requestUserPermission() {
@@ -36,9 +36,11 @@ const NotificationListener = () => {
     //   remoteMessage,
     // );
 
-    if (!!remoteMessage?.data && remoteMessage?.data?.redirect_to == "StoryIcon") {
+    if (!!remoteMessage?.data && remoteMessage?.data?.redirect_to) {
       console.log('redirect',remoteMessage?.data)
-      NavigationServices.navigate("StoryIcon", {id: remoteMessage?.data?.id })
+      NavigationServices.navigate(remoteMessage?.data?.redirect_to, {id: remoteMessage?.data?.id })
+    } else {
+      NavigationServices.navigate("Menu")
     }
   })
 
@@ -50,13 +52,16 @@ const NotificationListener = () => {
           'Notification caused app to open from quit state:',
           remoteMessage,
         );
-        if (!!remoteMessage?.data && remoteMessage?.data?.redirect_to == "Story") {
+        if (!!remoteMessage?.data && remoteMessage?.data?.redirect_to) {
           setTimeout(() => {
-            NavigationServices.navigate("Story")
+            NavigationServices.navigate(remoteMessage?.data?.redirect_to, {id: remoteMessage?.data?.id })
             console.log('redirect')
-          }, 12000)
+          }, 1000)
+        }  else {
+          NavigationServices.navigate("Menu")
         }
       }
+      
     })
 
   messaging().onMessage(async remoteMessage => {

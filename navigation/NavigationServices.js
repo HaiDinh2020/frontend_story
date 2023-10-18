@@ -1,4 +1,4 @@
-import {NavigationActions} from '@react-navigation/native';
+import {NavigationActions, NavigationContainerRef} from '@react-navigation/native';
 
 let _navigator;
 
