@@ -1,7 +1,7 @@
 import { Modal, Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const ConfirmLoadData = ({modalVisible, confirmLoadData}) => {
+const ConfirmLoadData = ({ modalVisible, confirmLoadData }) => {
 
     const handleCancel = () => {
         confirmLoadData(false, false)
@@ -21,7 +21,6 @@ const ConfirmLoadData = ({modalVisible, confirmLoadData}) => {
                 <View style={styles.modalView}>
                     <Text style={styles.modalText}>Do you want to update data?</Text>
                     <View style={styles.buttonView}>
-
                         <Pressable
                             style={[styles.button]}
                             onPress={handleCancel}>
@@ -68,17 +67,22 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     buttonView: {
-        justifyContent: 'space-evenly',
-        alignItems: 'center',
         flexDirection: 'row'
     },
     button: {
         borderRadius: 20,
-        padding: 10,
-        width: 50,
+        margin: 10,
+        width: 100,
         elevation: 2,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     buttonOK: {
         backgroundColor: '#2196F3',
     },
+    textStyle: {
+        color: 'black',
+        fontSize: 20,
+        fontWeight: 'bold'
+    }
 })
