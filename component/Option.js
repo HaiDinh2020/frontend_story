@@ -30,7 +30,7 @@ const Option = ({ setIndexPage, onPress, autoNextPage, cancleAutoNextPage }) => 
 
 
     const cancelStory = () => {
-        navigation.navigate('Home')
+        navigation.navigate('Story')
         cancleAutoNextPage();
     }
 

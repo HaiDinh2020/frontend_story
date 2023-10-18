@@ -4,6 +4,7 @@ import Sound from "react-native-sound";
 import pointInPolygon from 'point-in-polygon'
 import { HEIGHT, WITH } from "../../constants";
 import { Dimensions } from "react-native";
+import { useTouchText } from "../../store/zustandStore";
 
 
 function TouchIcon({ position, touches, touch }) {
@@ -11,7 +12,8 @@ function TouchIcon({ position, touches, touch }) {
     const height = Dimensions.get('screen').height
     const font = useFont(require("../../asserts/fonts/Nasa21-l23X.ttf"), 20);
 
-    const [touchText, setTouchText] = useState("");
+    const touchText = useTouchText((state) => state.touchText);
+    const setTouchText = useTouchText((state) => state.setTouchText)
     // const [sound, setSound] = useState()
     const [isTouch, setIsTouch] = useState(false)
     const [touchTimeout, setTouchTimeout] = useState();
@@ -43,6 +45,7 @@ function TouchIcon({ position, touches, touch }) {
 
 
     useEffect(() => {
+        setTouchText('')
         touches?.map((item, index) => {
             const vertices = convertCoordinates(JSON.parse(item.data).vertices);
             const objectText = item.belong_text.text;

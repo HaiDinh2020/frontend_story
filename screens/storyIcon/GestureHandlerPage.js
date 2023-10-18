@@ -119,7 +119,7 @@ function GestureHandlerPage(props) {
         }
     }
     useEffect(() => {
-        console.log('render gesturehandlePage', pagesIcon)
+        // console.log('render gesturehandlePage', pagesIcon)
         setTimeout(() => {
             cornorWith.value = 0;
             cornorHeight.value = 0;

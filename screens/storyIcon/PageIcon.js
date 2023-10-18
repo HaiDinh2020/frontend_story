@@ -47,7 +47,7 @@ function PageIcon({ page, cx, cy, touch, isFling }) {
             </Canvas>
             <View style={styles.roundTitle}>
                 <View style={styles.title}>
-                    <TitleIcon title={title} icons={icons} isFling={isFling} />
+                    <TitleIcon title={title} icons={icons} isFling={isFling} touch={touch}/>
                 </View>
             </View>
         </SafeAreaView>

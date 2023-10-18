@@ -4,7 +4,7 @@ import Word from "./Word";
 import Sound from "react-native-sound";
 import { useStoryStore } from "../../../store/zustandStore";
 
-const TitleIcon = ({ title, icons, isFling }) => {
+const TitleIcon = ({ title, icons, isFling, touch }) => {
 
 
     const titleIcon = JSON.parse(title?.belong_text.sync_data);
@@ -93,7 +93,7 @@ const TitleIcon = ({ title, icons, isFling }) => {
                         )
                     } else {
                         return (
-                            <Word key={index} word={item.w} indexWord={index} indexTime={indexTime} />
+                            <Word key={index} word={item.w} indexWord={index} indexTime={indexTime} touch={touch}  />
                         )
                     }
 

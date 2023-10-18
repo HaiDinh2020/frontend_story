@@ -13,7 +13,7 @@ const EndGame = () => {
   }
 
   const handleMenu = () => {
-    navigation.navigate('Home')
+    navigation.navigate('Menu')
   }
 
   return (
