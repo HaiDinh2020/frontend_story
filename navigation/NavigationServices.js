@@ -1,4 +1,4 @@
-import {NavigationActions, NavigationContainerRef} from '@react-navigation/native';
+import {CommonActions, NavigationActions} from '@react-navigation/native';
 
 let _navigator;
 
@@ -7,6 +7,14 @@ function setTopLevelNavigator(navigatorRef) {
 }
 
 function navigate(routeName, params) {
+	_navigator.dispatch(
+		CommonActions.reset({
+			index: 1,
+			routes: [
+				{ name: 'Menu' },
+			],
+		})
+	);
 	_navigator.navigate(routeName,params);
 }
 

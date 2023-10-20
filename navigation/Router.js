@@ -31,7 +31,6 @@ export function Route() {
             <Stack.Screen options={{ headerShown: false, orientation: 'landscape' }} name="PageIcon" component={PageIcon} />
             <Stack.Screen options={{ headerShown: false, orientation: 'landscape' }} name="EndGame" component={EndGame} />
             <Stack.Screen options={{ headerShown: false, orientation: 'portrait' }} name="Home" component={UITab} />
-            <Stack.Screen options={{ headerShown: false, orientation: 'landscape' }} name="StoryDetail" component={Page} />
             <Stack.Screen options={{ headerShown: false, orientation: 'portrait' }} name="CreateText" component={CreateText} />
             <Stack.Screen options={{ headerShown: false, orientation: 'portrait' }} name='CRUD' component={InputText} />
             </Stack.Navigator>

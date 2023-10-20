@@ -128,6 +128,7 @@ function GestureHandlerPage(props) {
             setPage(pagesIcon[currentPage])
             reloadPage();
         }, 50)
+        console.log(pagesIcon[currentPage+1], currentPage)
         if (currentPage == pagesIcon.length - 1) {
             setTimeout(() => {
                 navigation.replace("EndGame")

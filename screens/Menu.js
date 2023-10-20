@@ -7,7 +7,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function Menu({ navigation }) {
 
-    // const [modalVisible, setModalVisible] = useState(false);
 
     const playStory = () => {
         navigation.navigate('Story')
@@ -42,21 +41,6 @@ function Menu({ navigation }) {
                 style={styles.background}
             >
                 <View style={styles.header} >
-                    {/* <Modal
-                        visible={modalVisible}
-                        animationType="slide"
-                        transparent={true}
-                        onRequestClose={() => {
-                            setModalVisible(!modalVisible);
-                        }}
-                    >
-                        <View style={styles.viewModal} >
-
-                            <View >
-
-                            </View>
-                        </View>
-                    </Modal> */}
                     <View style={styles.title}>
 
                         <Pressable

@@ -32,7 +32,7 @@ function Login({ navigation }) {
           } else {
             console.log(response.data.token)
             saveToken(response.data.token, email, password)
-            navigation.navigate('Menu')
+            navigation.navigate('LoadData')
           }
         })
         .catch(function (error) {

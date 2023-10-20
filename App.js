@@ -10,7 +10,7 @@ import { Route } from './navigation/Router';
 export default function App() {
   useEffect(() => {
     requestUserPermission();
-    // GetFCMToke()
+    GetFCMToke()
     NotificationListener();
   }, []);
 

@@ -5,9 +5,8 @@ import axios from 'axios';
 import { WITH, url } from '../constants';
 import Animated, { useAnimatedStyle, useSharedValue, withRepeat, withSpring, withTiming } from 'react-native-reanimated';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, CommonActions } from '@react-navigation/native';
 import ConfirmLoadData from '../component/ConfirmLoadData';
-
 
 const LoadData = () => {
 
@@ -63,7 +62,7 @@ const LoadData = () => {
                 ToastAndroid.TOP,
                 25,
                 50,
-              );
+            );
             // Alert.alert()
             setIsLoading(false)
         }
@@ -125,7 +124,14 @@ const LoadData = () => {
                 writeListSroies();
                 write10StoryData();
             } else {
-                navigation.navigate('Menu')
+                navigation.dispatch(
+                    CommonActions.reset({
+                        index: 1,
+                        routes: [
+                            { name: 'Menu' },
+                        ],
+                    })
+                );
             }
         }
     }, [isLoading, modalVisible])
